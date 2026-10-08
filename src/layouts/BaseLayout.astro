@@ -1,0 +1,582 @@
+---
+import '../styles/global.css';
+import siteData from '../data/site.json';
+import ThemeSwitcher from '../components/ThemeSwitcher.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  currentPath?: string;
+}
+
+const {
+  title,
+  description = siteData.seo.description,
+  currentPath = Astro.url.pathname
+} = Astro.props;
+
+const pageTitle = title 
+  ? `${title} — ${siteData.brand.name} Atelier`
+  : siteData.seo.defaultTitle;
+---
+
+<!DOCTYPE html>
+<html lang="es" data-theme="yeso-salvia">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content={description} />
+  <title>{pageTitle}</title>
+
+  <script is:inline>
+    (() => {
+      const saved = localStorage.getItem('pliegue-theme') || 'yeso-salvia';
+      document.documentElement.setAttribute('data-theme', saved);
+    })();
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Google Fonts Preconnect: Bricolage Grotesque & DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=DM+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
+
+  <!-- Lenis Standalone Smooth Scroll Engine -->
+  <script is:inline src="/scripts/lenis.min.js"></script>
+</head>
+<body>
+  <aside class="demo-banner">
+    <div class="banner-left">
+      <span class="tag-meta">{siteData.commercialBanner.badge}</span>
+      <span>{siteData.commercialBanner.text}</span>
+    </div>
+    <div class="banner-right">
+      <a href={siteData.commercialBanner.ctaLink} target="_blank" rel="noopener">
+        {siteData.commercialBanner.ctaText} →
+      </a>
+    </div>
+  </aside>
+
+  <!-- Encabezado Principal -->
+  <header class="pliegue-header">
+    <div class="container header-inner">
+      <a href="/" class="brand-brand" aria-label="Inicio Atelier Pliegue">
+        <span class="brand-wordmark">PLIEGUE</span>
+        <span class="brand-edition">ATELIER</span>
+      </a>
+
+      <nav class="desktop-nav" aria-label="Navegación principal">
+        <ul class="nav-links">
+          {siteData.nav.map(item => {
+            const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+            return (
+              <li>
+                <a href={item.href} class:list={['nav-a', { active: isActive }]}>
+                  {item.label}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+      <div class="header-action-group">
+        <a href="/contacto" class="btn btn-secondary header-quote-btn">Solicitar Catálogo</a>
+        <button 
+          type="button" 
+          class="mobile-menu-burger" 
+          id="pliegueMenuToggle" 
+          aria-label="Abrir menú" 
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Cajón móvil -->
+  <div class="mobile-drawer" id="pliegueDrawer" hidden>
+    <div class="drawer-top">
+      <span class="tag-meta">Menú de Colección</span>
+      <button type="button" class="drawer-close" id="pliegueDrawerClose">✕</button>
+    </div>
+    <nav class="drawer-nav">
+      <ul>
+        {siteData.nav.map(item => (
+          <li>
+            <a href={item.href} class="drawer-nav-a">{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <div class="drawer-bottom">
+      <p class="tag-meta">Showroom & Consultas</p>
+      <a href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a>
+      <p class="drawer-hours">{siteData.contact.showroomHours}</p>
+    </div>
+  </div>
+
+  <main id="main">
+    <slot />
+  </main>
+
+  <!-- Footer -->
+  <footer class="pliegue-footer">
+    <div class="container footer-grid">
+      <div class="footer-col brand-col">
+        <h2 class="footer-logo">PLIEGUE</h2>
+        <p class="footer-tagline">{siteData.brand.tagline}</p>
+        <p class="footer-desc">{siteData.brand.description}</p>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-col-title">Colecciones</h4>
+        <ul class="footer-col-links">
+          <li><a href="/colecciones">Ver Colecciones</a></li>
+          <li><a href="/catalogo?cat=Iluminación">Luminarias de Autor</a></li>
+          <li><a href="/catalogo?cat=Mesas">Mesas de Madera Maciza</a></li>
+          <li><a href="/catalogo?cat=Asientos">Asientos & Sillas</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-col-title">Atelier</h4>
+        <ul class="footer-col-links">
+          <li><a href="/marca">Filosofía del Material</a></li>
+          <li><a href="/marca#proceso">Proceso de Fabricación</a></li>
+          <li><a href="/contacto">Visitas al Showroom</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-col-title">Atención al Cliente</h4>
+        <address class="footer-address">
+          <p>{siteData.contact.address}</p>
+          <p><a href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a></p>
+          <p class="tag-meta">{siteData.contact.showroomHours}</p>
+        </address>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© {new Date().getFullYear()} {siteData.brand.legalName}. Todos los derechos reservados.</p>
+      <p class="disclaimer">
+        Sitio de demostración creado por <a href="https://lumuxstudio.com/es" target="_blank" rel="noopener">Lumux Studio</a>. Todos los objetos y referencias son ficticios.
+      </p>
+    </div>
+  </footer>
+
+  <ThemeSwitcher />
+
+  <style>
+    .pliegue-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: var(--color-bg-primary);
+      border-bottom: 1px solid var(--color-border);
+      transition: background-color 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 4.75rem;
+    }
+
+    .brand-brand {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .brand-wordmark {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--color-text-primary);
+    }
+
+    .brand-edition {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: var(--color-accent);
+    }
+
+    .desktop-nav {
+      display: none;
+    }
+
+    @media (min-width: 900px) {
+      .desktop-nav {
+        display: block;
+      }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-a {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-secondary);
+      transition: color var(--transition-fast);
+      position: relative;
+      padding: 0.25rem 0;
+    }
+
+    .nav-a:hover,
+    .nav-a.active {
+      color: var(--color-text-primary);
+    }
+
+    .nav-a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--color-accent);
+    }
+
+    .header-action-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-quote-btn {
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .header-quote-btn {
+        display: inline-flex;
+        padding: 0.6rem 1.25rem;
+        font-size: 0.775rem;
+      }
+    }
+
+    .mobile-menu-burger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 2.5rem;
+      height: 2.5rem;
+      background: transparent;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xs);
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    @media (min-width: 900px) {
+      .mobile-menu-burger {
+        display: none;
+      }
+    }
+
+    .mobile-menu-burger span {
+      width: 100%;
+      height: 2px;
+      background-color: var(--color-text-primary);
+    }
+
+    /* Drawer */
+    .mobile-drawer {
+      position: fixed;
+      inset: 0;
+      background-color: var(--color-bg-primary);
+      z-index: 1000;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-drawer[hidden] {
+      display: none;
+    }
+
+    .drawer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 1.5rem;
+    }
+
+    .drawer-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--color-text-primary);
+    }
+
+    .drawer-nav {
+      flex: 1;
+      margin-top: 2rem;
+    }
+
+    .drawer-nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .drawer-nav-a {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      color: var(--color-text-primary);
+    }
+
+    .drawer-nav-a:hover {
+      color: var(--color-accent);
+    }
+
+    .drawer-bottom {
+      border-top: 1px solid var(--color-border);
+      padding-top: 1.5rem;
+    }
+
+    .drawer-hours {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* Footer */
+    .pliegue-footer {
+      background-color: var(--color-bg-secondary);
+      border-top: 1px solid var(--color-border);
+      padding: 5rem 0 3rem;
+      margin-top: auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    @media (min-width: 640px) {
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      }
+    }
+
+    .footer-logo {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-tagline {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      color: var(--color-accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-desc {
+      font-size: 0.85rem;
+      color: var(--color-text-secondary);
+      max-width: 320px;
+    }
+
+    .footer-col-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-col-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      font-size: 0.875rem;
+    }
+
+    .footer-col-links a:hover {
+      color: var(--color-accent);
+    }
+
+    .footer-address {
+      font-style: normal;
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--color-border);
+      padding-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+    }
+
+    @media (min-width: 768px) {
+      .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .footer-bottom a {
+      color: var(--color-accent);
+    }
+  </style>
+
+  <script is:inline>
+    (() => {
+      const toggle = document.getElementById('pliegueMenuToggle');
+      const drawer = document.getElementById('pliegueDrawer');
+      const close = document.getElementById('pliegueDrawerClose');
+
+      if (!toggle || !drawer) return;
+
+      function openDrawer() {
+        drawer.hidden = false;
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeDrawer() {
+        drawer.hidden = true;
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+
+      toggle.addEventListener('click', openDrawer);
+      close?.addEventListener('click', closeDrawer);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !drawer.hidden) closeDrawer();
+      });
+    })();
+  </script>
+
+  <!-- Animaciones GSAP + Lenis Smooth Scroll -->
+  <script>
+    import gsap from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+    if (typeof window !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // 1. Inicialización de Lenis Smooth Scroll
+      let lenis: any = null;
+      if (!prefersReducedMotion && typeof (window as any).Lenis !== 'undefined') {
+        lenis = new (window as any).Lenis({
+          duration: 1.2,
+          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          orientation: 'vertical',
+          gestureOrientation: 'vertical',
+          smoothWheel: true,
+          wheelMultiplier: 0.95,
+          touchMultiplier: 1.2,
+          infinite: false
+        });
+
+        lenis.on('scroll', ScrollTrigger.update);
+
+        gsap.ticker.add((time) => {
+          lenis.raf(time * 1000);
+        });
+
+        gsap.ticker.lagSmoothing(0);
+        (window as any).lenisInstance = lenis;
+
+        // Desplazamiento suave para enlaces ancla
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener('click', (e) => {
+            const targetId = anchor.getAttribute('href');
+            if (targetId && targetId !== '#' && document.querySelector(targetId)) {
+              e.preventDefault();
+              lenis.scrollTo(targetId, { offset: -70, duration: 1.2 });
+            }
+          });
+        });
+      }
+
+      // 2. Animaciones de entrada coordinadas entre secciones
+      if (!prefersReducedMotion) {
+        gsap.from('h1', {
+          y: 28,
+          opacity: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity'
+        });
+
+        const headers = document.querySelectorAll('.sec-header, .metrics-header, .manifesto-quote, .contact-header-block');
+        headers.forEach((header) => {
+          if (header.closest('.atelier-content')) return;
+          gsap.from(header, {
+            scrollTrigger: {
+              trigger: header,
+              start: 'top 88%',
+              toggleActions: 'play none none none'
+            },
+            y: 35,
+            opacity: 0,
+            duration: 0.85,
+            ease: 'power3.out',
+            clearProps: 'transform,opacity'
+          });
+        });
+
+        const cards = document.querySelectorAll('.product-card, .collection-overview-card, .raw-card, .trade-card, .lookbook-item, .material-card-tactile, .review-card-friendly, .atelier-scene-card');
+        cards.forEach((card) => {
+          if (card.closest('.atelier-content')) return;
+          gsap.from(card, {
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 88%',
+              toggleActions: 'play none none none'
+            },
+            y: 40,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+            clearProps: 'transform,opacity'
+          });
+        });
+      }
+    }
+  </script>
+</body>
+</html>

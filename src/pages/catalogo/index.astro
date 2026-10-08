@@ -1,0 +1,261 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { getCollection } from 'astro:content';
+
+const products = await getCollection('products');
+const categories = ['Todas', 'Iluminación', 'Mesas', 'Asientos', 'Objetos & Cerámica'];
+---
+
+<BaseLayout 
+  title="Catálogo de Piezas" 
+  description="Catálogo completo de mobiliario, iluminación de autor y objetos artesanales editados por Atelier Pliegue."
+>
+  <div class="page-header">
+    <div class="container">
+      <span class="tag-meta">Archivo de Piezas de Autor</span>
+      <h1 class="header-h1">CATÁLOGO EDITORIAL</h1>
+      <p class="header-lead">
+        Piezas numeradas fabricadas en lotes pequeños en nuestro taller. Filtra por tipología o consulta fichas técnicas específicas.
+      </p>
+
+      <!-- Barra de Filtros -->
+      <div class="catalogo-filters-bar" id="productFilterBar" role="tablist">
+        {categories.map((cat, idx) => (
+          <button 
+            type="button" 
+            class:list={['filter-tab-btn', { active: idx === 0 }]}
+            data-cat={cat}
+            role="tab"
+            aria-selected={idx === 0 ? "true" : "false"}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <section class="catalog-grid-section">
+    <div class="container">
+      <div class="catalog-grid" id="catalogGrid">
+        {products.map(p => (
+          <div class="catalog-item-wrap" data-category={p.data.category} data-collection={p.data.collection}>
+            <ProductCard 
+              name={p.data.name}
+              category={p.data.category}
+              collection={p.data.collection}
+              image={p.data.images[0].src}
+              dimensions={p.data.dimensions}
+              slug={p.id}
+            />
+          </div>
+        ))}
+      </div>
+
+      <!-- Estado vacío -->
+      <div class="empty-catalog-state" id="emptyCatalog" hidden>
+        <p class="empty-txt">No se encontraron piezas en esta categoría en la demostración.</p>
+        <button type="button" class="btn btn-secondary" id="resetCatalogFilter">Ver todas las piezas</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Banner de cotización de arquitectura -->
+  <section class="trade-banner-section">
+    <div class="container-narrow text-center">
+      <span class="tag-meta">Para Arquitectos & Diseñadores</span>
+      <h2 class="trade-title">ESPECIFICACIÓN PARA PROYECTOS COMERCIALES & RESIDENCIALES</h2>
+      <p class="trade-desc">
+        Ofrecemos tarifas preferenciales de taller y desarrollo de dimensiones personalizadas para despachos de arquitectura, hoteles y restaurantes.
+      </p>
+      <a href="/contacto" class="btn btn-primary">Solicitar Catálogo de Especificación →</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: clamp(3.5rem, 6vw, 6rem) 0 3.5rem;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+  }
+
+  .header-h1 {
+    margin: 0.75rem 0 1rem;
+  }
+
+  .header-lead {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--color-text-secondary);
+    max-width: 650px;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+  }
+
+  .catalogo-filters-bar {
+    display: flex;
+    gap: 0.625rem;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.5rem;
+  }
+
+  .filter-tab-btn {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    padding: 0.5rem 1.25rem;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .filter-tab-btn:hover {
+    border-color: var(--color-text-primary);
+    color: var(--color-text-primary);
+  }
+
+  .filter-tab-btn.active {
+    background-color: var(--color-text-primary);
+    color: var(--color-bg-primary);
+    border-color: var(--color-text-primary);
+  }
+
+  .catalog-grid-section {
+    padding: clamp(4rem, 8vw, 8rem) 0;
+  }
+
+  .catalog-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem 2.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .catalog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .catalog-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .catalog-item-wrap {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .catalog-item-wrap.hidden {
+    display: none;
+  }
+
+  .empty-catalog-state {
+    text-align: center;
+    padding: 5rem 0;
+  }
+
+  .empty-txt {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .trade-banner-section {
+    padding: clamp(5rem, 8vw, 7.5rem) 0;
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+  }
+
+  .text-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .trade-title {
+    margin: 1rem 0 1.25rem;
+    line-height: 1.2;
+  }
+
+  .trade-desc {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    margin-bottom: 2.25rem;
+    max-width: 620px;
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const tabs = document.querySelectorAll('.filter-tab-btn');
+    const items = document.querySelectorAll('.catalog-item-wrap');
+    const empty = document.getElementById('emptyCatalog');
+    const reset = document.getElementById('resetCatalogFilter');
+
+    if (!tabs.length || !items.length) return;
+
+    // Check query params
+    const params = new URLSearchParams(window.location.search);
+    const catQuery = params.get('cat');
+    const colQuery = params.get('coleccion');
+
+    if (catQuery) {
+      applyFilter(catQuery, 'category');
+    } else if (colQuery) {
+      applyFilter(colQuery, 'collection');
+    }
+
+    function applyFilter(value, mode = 'category') {
+      let count = 0;
+
+      tabs.forEach(t => {
+        const isMatch = t.getAttribute('data-cat') === value;
+        t.classList.toggle('active', isMatch);
+        t.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+      });
+
+      items.forEach(it => {
+        const itemCat = it.getAttribute('data-category');
+        const itemCol = it.getAttribute('data-collection');
+
+        let match = false;
+        if (value === 'Todas') {
+          match = true;
+        } else if (mode === 'category') {
+          match = itemCat === value || (value.includes('Objetos') && Boolean(itemCat && itemCat.includes('Objetos')));
+        } else if (mode === 'collection') {
+          match = itemCol === value;
+        }
+
+        if (match) {
+          it.classList.remove('hidden');
+          count++;
+        } else {
+          it.classList.add('hidden');
+        }
+      });
+
+      if (empty) empty.hidden = count > 0;
+    }
+
+    tabs.forEach(t => {
+      t.addEventListener('click', () => {
+        const cat = t.getAttribute('data-cat');
+        if (cat) applyFilter(cat, 'category');
+      });
+    });
+
+    reset?.addEventListener('click', () => {
+      applyFilter('Todas', 'category');
+    });
+  })();
+</script>

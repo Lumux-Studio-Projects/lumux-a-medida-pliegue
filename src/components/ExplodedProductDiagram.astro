@@ -1,0 +1,579 @@
+---
+// ExplodedProductDiagram.astro
+// Diagrama vectorial SVG interactivo y animado del despiece técnico de la Lámpara Pliegue
+---
+
+<div class="exploded-diagram-root" id="explodedDiagramRoot">
+  <!-- Barra superior de dibujo industrial -->
+  <div class="exp-toolbar">
+    <div class="exp-meta">
+      <span class="exp-badge">PLANO DE ENSAMBLE DE TALLER</span>
+      <span class="exp-scale">REF. PLG-01-EXP · ESCALA 1:2 · TOLERANCIA MANUAL ±0.2 MM</span>
+    </div>
+    <div class="exp-controls">
+      <button type="button" class="exp-btn active" data-mode="exploded">Despiece Explotado</button>
+      <button type="button" class="exp-btn" data-mode="photometry">Emisión Fotométrica</button>
+      <button type="button" class="exp-btn" data-mode="specs">Cotas de Taller</button>
+    </div>
+  </div>
+
+  <!-- Lienzo técnico SVG -->
+  <div class="exp-canvas-wrap">
+    <svg 
+      class="exploded-svg" 
+      viewBox="0 0 1000 620" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Despiece técnico y ensamble artesanal de la Lámpara Pliegue"
+    >
+      <defs>
+        <!-- Retícula isométrica técnica -->
+        <pattern id="craftGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+          <path d="M 30 0 L 0 0 0 30" fill="none" stroke="currentColor" stroke-opacity="0.05" stroke-width="0.5"/>
+          <circle cx="15" cy="15" r="0.6" fill="currentColor" fill-opacity="0.1" />
+        </pattern>
+
+        <!-- Gradiente de emisión cálida -->
+        <radialGradient id="lampGlowGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFE8B2" stop-opacity="0.8" />
+          <stop offset="40%" stop-color="#FFD166" stop-opacity="0.35" />
+          <stop offset="100%" stop-color="#FFD166" stop-opacity="0" />
+        </radialGradient>
+
+        <linearGradient id="brassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#E5C07B" />
+          <stop offset="50%" stop-color="#C59B4B" />
+          <stop offset="100%" stop-color="#9C772F" />
+        </linearGradient>
+
+        <linearGradient id="woodGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#D7C4A5" />
+          <stop offset="50%" stop-color="#C8B291" />
+          <stop offset="100%" stop-color="#B89F7D" />
+        </linearGradient>
+      </defs>
+
+      <!-- Fondo y cuadrícula técnica -->
+      <rect width="1000" height="620" fill="var(--color-bg-card)" />
+      <rect width="1000" height="620" fill="url(#craftGrid)" />
+
+      <!-- EJE VERTICAL PRINCIPAL DE ENSAMBLE (Línea central de simetría animada) -->
+      <line x1="500" y1="40" x2="500" y2="570" stroke="var(--color-accent)" stroke-opacity="0.4" stroke-width="1.2" stroke-dasharray="6 4" class="axis-pulse" />
+
+      <!-- LÍNEAS DE COTA Y DIMENSIONES (Modo Specs) -->
+      <g class="layer-specs" stroke="currentColor" stroke-opacity="0.25" stroke-width="0.8">
+        <!-- Cota de altura total: 420 mm -->
+        <line x1="200" y1="80" x2="200" y2="520" />
+        <line x1="190" y1="80" x2="210" y2="80" />
+        <line x1="190" y1="520" x2="210" y2="520" />
+        <text x="180" y="305" fill="currentColor" fill-opacity="0.6" font-family="var(--font-mono)" font-size="10" text-anchor="end">ALTURA TOTAL: 420 mm</text>
+
+        <!-- Cota diámetro base: Ø 180 mm -->
+        <line x1="410" y1="550" x2="590" y2="550" />
+        <line x1="410" y1="542" x2="410" y2="558" />
+        <line x1="590" y1="542" x2="590" y2="558" />
+        <text x="500" y="568" fill="currentColor" fill-opacity="0.6" font-family="var(--font-mono)" font-size="10" text-anchor="middle">BASE: Ø 180 mm</text>
+
+        <!-- Cota ancho pantalla: 280 mm -->
+        <line x1="360" y1="65" x2="640" y2="65" />
+        <line x1="360" y1="58" x2="360" y2="72" />
+        <line x1="640" y1="58" x2="640" y2="72" />
+        <text x="500" y="55" fill="currentColor" fill-opacity="0.6" font-family="var(--font-mono)" font-size="10" text-anchor="middle">ENVERGADURA PANTALLA: 280 mm</text>
+      </g>
+
+      <!-- CAPA FOTOMÉTRICA (Modo Photometry) -->
+      <g class="layer-photometry" style="display: none;">
+        <!-- Cono de dispersión lumínica 2700K -->
+        <polygon points="500,180 250,520 750,520" fill="url(#lampGlowGrad)" />
+        <circle cx="500" cy="180" r="32" fill="#FFE8B2" fill-opacity="0.75" class="bulb-pulse" />
+        <circle cx="500" cy="180" r="65" fill="#FFE8B2" fill-opacity="0.25" class="bulb-ring" />
+        <text x="500" y="270" fill="var(--color-text-primary)" font-family="var(--font-mono)" font-size="10" text-anchor="middle" font-weight="600">2700 K · LUZ CÁLIDA MUSEOGRÁFICA</text>
+        <text x="500" y="288" fill="var(--color-text-secondary)" font-family="var(--font-mono)" font-size="9" text-anchor="middle">CRI > 95 · EMISIÓN DIRECTA / INDIRECTA</text>
+      </g>
+
+      <!-- PIEZA 01: PANTALLA REFLECTORA CURVADA (Aluminio / Cobre según tema) -->
+      <g class="exploded-part part-01" data-part="01" transform="translate(0, 0)">
+        <!-- Curvatura parabólica de la pantalla superior -->
+        <path 
+          d="M 370 120 C 430 80 570 80 630 120 C 600 135 550 145 500 145 C 450 145 400 135 370 120 Z" 
+          fill="var(--color-accent)" 
+          stroke="currentColor" 
+          stroke-width="1.5" 
+          class="metal-shade"
+        />
+        <!-- Pestaña de borde doblado a mano -->
+        <path d="M 370 120 C 430 135 570 135 630 120" stroke="currentColor" stroke-width="1" stroke-opacity="0.5" fill="none" />
+        <!-- Línea guía vertical de ensamble -->
+        <line x1="500" y1="145" x2="500" y2="185" stroke="currentColor" stroke-dasharray="3 3" stroke-width="1" stroke-opacity="0.5" />
+      </g>
+
+      <!-- PIEZA 02: DIFUSOR OPALINO Y MÓDULO LED -->
+      <g class="exploded-part part-02" data-part="02" transform="translate(0, 0)">
+        <!-- Esfera opalina difusora -->
+        <ellipse cx="500" cy="185" rx="28" ry="16" fill="#F8F6F0" stroke="currentColor" stroke-width="1.2" />
+        <!-- Núcleo LED cálido -->
+        <circle cx="500" cy="185" r="7" fill="#FFE29A" stroke="#E5C07B" stroke-width="1" />
+        <!-- Línea guía -->
+        <line x1="500" y1="201" x2="500" y2="235" stroke="currentColor" stroke-dasharray="3 3" stroke-width="1" stroke-opacity="0.5" />
+      </g>
+
+      <!-- PIEZA 03: RÓTULA Y PERNO DE LATÓN MACIZO -->
+      <g class="exploded-part part-03" data-part="03" transform="translate(0, 0)">
+        <!-- Casquillo cilíndrico mecanizado -->
+        <rect x="490" y="235" width="20" height="18" rx="2" fill="url(#brassGrad)" stroke="#9C772F" stroke-width="1.2" />
+        <!-- Tornillo de apriete manual con estrías moleteadas -->
+        <rect x="510" y="240" width="16" height="8" rx="1" fill="url(#brassGrad)" stroke="#9C772F" stroke-width="0.8" />
+        <line x1="514" y1="240" x2="514" y2="248" stroke="#5C4517" stroke-width="0.8" />
+        <line x1="518" y1="240" x2="518" y2="248" stroke="#5C4517" stroke-width="0.8" />
+        <line x1="522" y1="240" x2="522" y2="248" stroke="#5C4517" stroke-width="0.8" />
+        <!-- Línea guía -->
+        <line x1="500" y1="253" x2="500" y2="280" stroke="currentColor" stroke-dasharray="3 3" stroke-width="1" stroke-opacity="0.5" />
+      </g>
+
+      <!-- PIEZA 04: FUSTE TORNEADO EN ROBLE MACIZO -->
+      <g class="exploded-part part-04" data-part="04" transform="translate(0, 0)">
+        <!-- Columna cilíndrica de madera con conicidad sutil -->
+        <polygon points="492,280 508,280 511,430 489,430" fill="url(#woodGrad)" stroke="#8A7352" stroke-width="1.2" />
+        <!-- Vetas de madera estilizadas -->
+        <path d="M 495 295 Q 502 340 496 390" stroke="#8A7352" stroke-opacity="0.35" stroke-width="0.8" fill="none" />
+        <path d="M 503 310 Q 498 360 505 410" stroke="#8A7352" stroke-opacity="0.35" stroke-width="0.8" fill="none" />
+        <!-- Línea guía -->
+        <line x1="500" y1="430" x2="500" y2="465" stroke="currentColor" stroke-dasharray="3 3" stroke-width="1" stroke-opacity="0.5" />
+      </g>
+
+      <!-- PIEZA 05: BASE DISCO DE LASTRE Y FIELTRO -->
+      <g class="exploded-part part-05" data-part="05" transform="translate(0, 0)">
+        <!-- Disco superior de roble/metal de base -->
+        <ellipse cx="500" cy="475" rx="75" ry="22" fill="var(--color-bg-secondary)" stroke="currentColor" stroke-width="1.5" />
+        <ellipse cx="500" cy="483" rx="75" ry="22" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.5" />
+        <!-- Disco inferior de contrapeso fundido (lastre antivuelco) -->
+        <ellipse cx="500" cy="505" rx="72" ry="20" fill="currentColor" fill-opacity="0.85" stroke="currentColor" stroke-width="1.2" />
+        <text x="500" y="509" fill="var(--color-bg-primary)" font-family="var(--font-mono)" font-size="8" text-anchor="middle" letter-spacing="1">DISCO LASTRE 2.4 KG</text>
+        <!-- Almohadilla protectora de fieltro de lana -->
+        <ellipse cx="500" cy="516" rx="68" ry="18" fill="#8E887E" stroke="currentColor" stroke-dasharray="2 2" stroke-width="0.8" />
+      </g>
+
+      <!-- PIEZA 06: CABLE TEXTIL TRENZADO CON INTERRUPTOR DE LATÓN -->
+      <g class="exploded-part part-06" data-part="06">
+        <!-- Curva fluida de cable que sale de la base hacia la derecha -->
+        <path 
+          d="M 500 488 C 530 488 560 520 600 520 C 640 520 660 490 700 490 C 740 490 770 535 830 535" 
+          stroke="var(--color-accent)" 
+          stroke-width="2.5" 
+          stroke-linecap="round" 
+          stroke-dasharray="5 3" 
+          class="animated-cable"
+          fill="none"
+        />
+        <!-- Interruptor de paso cilíndrico de latón -->
+        <rect x="685" y="482" width="28" height="16" rx="4" fill="url(#brassGrad)" stroke="#9C772F" stroke-width="1" />
+        <circle cx="699" cy="490" r="4" fill="#3A301A" />
+      </g>
+
+      <!-- HOTSPOTS INTERACTIVOS NUMERADOS Y ESTABLES (SIN TEMBLOR) -->
+      <!-- 01 Pantalla -->
+      <g class="exp-hotspot active" data-target="01" transform="translate(640, 110)">
+        <circle cx="0" cy="0" r="22" fill="transparent" class="hotspot-hitbox" />
+        <circle cx="0" cy="0" r="18" fill="none" stroke="var(--color-accent)" stroke-width="1.2" class="pulse-ring" />
+        <circle cx="0" cy="0" r="14" fill="var(--color-bg-card)" stroke="var(--color-accent)" stroke-width="2" class="hotspot-bg" />
+        <text x="0" y="4" fill="var(--color-accent)" font-family="var(--font-mono)" font-size="10" font-weight="700" text-anchor="middle" class="hotspot-text">01</text>
+        <line x1="-14" y1="0" x2="-60" y2="0" stroke="var(--color-accent)" stroke-width="1.2" stroke-dasharray="3 3" class="hotspot-guide-line" />
+      </g>
+
+      <!-- 02 Difusor -->
+      <g class="exp-hotspot" data-target="02" transform="translate(390, 185)">
+        <circle cx="0" cy="0" r="22" fill="transparent" class="hotspot-hitbox" />
+        <circle cx="0" cy="0" r="18" fill="none" stroke="var(--color-accent)" stroke-width="1.2" class="pulse-ring" />
+        <circle cx="0" cy="0" r="14" fill="var(--color-bg-card)" stroke="var(--color-accent)" stroke-width="2" class="hotspot-bg" />
+        <text x="0" y="4" fill="var(--color-accent)" font-family="var(--font-mono)" font-size="10" font-weight="700" text-anchor="middle" class="hotspot-text">02</text>
+        <line x1="14" y1="0" x2="80" y2="0" stroke="var(--color-accent)" stroke-width="1.2" stroke-dasharray="3 3" class="hotspot-guide-line" />
+      </g>
+
+      <!-- 03 Rótula Latón -->
+      <g class="exp-hotspot" data-target="03" transform="translate(630, 244)">
+        <circle cx="0" cy="0" r="22" fill="transparent" class="hotspot-hitbox" />
+        <circle cx="0" cy="0" r="18" fill="none" stroke="var(--color-accent)" stroke-width="1.2" class="pulse-ring" />
+        <circle cx="0" cy="0" r="14" fill="var(--color-bg-card)" stroke="var(--color-accent)" stroke-width="2" class="hotspot-bg" />
+        <text x="0" y="4" fill="var(--color-accent)" font-family="var(--font-mono)" font-size="10" font-weight="700" text-anchor="middle" class="hotspot-text">03</text>
+        <line x1="-14" y1="0" x2="-100" y2="0" stroke="var(--color-accent)" stroke-width="1.2" stroke-dasharray="3 3" class="hotspot-guide-line" />
+      </g>
+
+      <!-- 04 Fuste Roble -->
+      <g class="exp-hotspot" data-target="04" transform="translate(390, 360)">
+        <circle cx="0" cy="0" r="22" fill="transparent" class="hotspot-hitbox" />
+        <circle cx="0" cy="0" r="18" fill="none" stroke="var(--color-accent)" stroke-width="1.2" class="pulse-ring" />
+        <circle cx="0" cy="0" r="14" fill="var(--color-bg-card)" stroke="var(--color-accent)" stroke-width="2" class="hotspot-bg" />
+        <text x="0" y="4" fill="var(--color-accent)" font-family="var(--font-mono)" font-size="10" font-weight="700" text-anchor="middle" class="hotspot-text">04</text>
+        <line x1="14" y1="0" x2="95" y2="0" stroke="var(--color-accent)" stroke-width="1.2" stroke-dasharray="3 3" class="hotspot-guide-line" />
+      </g>
+
+      <!-- 05 Base Ponderada -->
+      <g class="exp-hotspot" data-target="05" transform="translate(650, 495)">
+        <circle cx="0" cy="0" r="22" fill="transparent" class="hotspot-hitbox" />
+        <circle cx="0" cy="0" r="18" fill="none" stroke="var(--color-accent)" stroke-width="1.2" class="pulse-ring" />
+        <circle cx="0" cy="0" r="14" fill="var(--color-bg-card)" stroke="var(--color-accent)" stroke-width="2" class="hotspot-bg" />
+        <text x="0" y="4" fill="var(--color-accent)" font-family="var(--font-mono)" font-size="10" font-weight="700" text-anchor="middle" class="hotspot-text">05</text>
+        <line x1="-14" y1="0" x2="-75" y2="0" stroke="var(--color-accent)" stroke-width="1.2" stroke-dasharray="3 3" class="hotspot-guide-line" />
+      </g>
+    </svg>
+  </div>
+
+  <!-- Cuadrícula de Especificaciones de Componentes al Pie -->
+  <div class="exp-specs-grid">
+    <div class="exp-spec-card active" data-card="01">
+      <div class="card-num">01</div>
+      <div class="card-body">
+        <h4 class="card-name">Pantalla Hidroformada</h4>
+        <p class="card-text">Curvado de chapa con matriz progresiva y terminación satinada a mano. Proyecta una sombra envolvente sin deslumbramiento.</p>
+        <span class="card-material">Material: Aluminio anodizado / Cobre pulido</span>
+      </div>
+    </div>
+
+    <div class="exp-spec-card" data-card="02">
+      <div class="card-num">02</div>
+      <div class="card-body">
+        <h4 class="card-name">Difusor Opalino & LED</h4>
+        <p class="card-text">Vidrio triplex soplado artesanal. Módulo LED cálido integrado de 2700 Kelvin, 600 lúmenes y CRI > 95 para fidelidad cromática.</p>
+        <span class="card-material">Vida útil: 50,000 horas continuas</span>
+      </div>
+    </div>
+
+    <div class="exp-spec-card" data-card="03">
+      <div class="card-num">03</div>
+      <div class="card-body">
+        <h4 class="card-name">Rótula Mecanizada</h4>
+        <p class="card-text">Perno de latón macizo mecanizado en torno de precisión con tolerancia de ±0.1 mm. Permite orientación de 30° con tacto suave.</p>
+        <span class="card-material">Mecanismo: Tornillo moleteado sin herramientas</span>
+      </div>
+    </div>
+
+    <div class="exp-spec-card" data-card="04">
+      <div class="card-num">04</div>
+      <div class="card-body">
+        <h4 class="card-name">Fuste en Roble Macizo</h4>
+        <p class="card-text">Madera maciza de roble blanco americano seleccionada por veta continua, secada 6 meses y protegida con aceite de cera dura vegetal.</p>
+        <span class="card-material">Acabado: Cera natural de abeja y carnauba</span>
+      </div>
+    </div>
+
+    <div class="exp-spec-card" data-card="05">
+      <div class="card-num">05</div>
+      <div class="card-body">
+        <h4 class="card-name">Base de Lastre Antivuelco</h4>
+        <p class="card-text">Disco interior de acero fundido de 2.4 kg que otorga centro de gravedad ultra-bajo, rematado con fieltro de lana pura para proteger muebles.</p>
+        <span class="card-material">Peso total: 3.85 kg · Estabilidad certificada</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .exploded-diagram-root {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.05);
+  }
+
+  .exp-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--color-border);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .exp-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .exp-badge {
+    background-color: var(--color-accent);
+    color: #FFFFFF;
+    font-family: var(--font-mono);
+    font-size: 0.725rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-xs);
+    letter-spacing: 0.05em;
+  }
+
+  .exp-scale {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.04em;
+  }
+
+  .exp-controls {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .exp-btn {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .exp-btn:hover {
+    color: var(--color-text-primary);
+    border-color: var(--color-text-primary);
+  }
+
+  .exp-btn.active {
+    background-color: var(--color-text-primary);
+    color: var(--color-bg-primary);
+    border-color: var(--color-text-primary);
+  }
+
+  .exp-canvas-wrap {
+    position: relative;
+    width: 100%;
+    background-color: var(--color-bg-card);
+  }
+
+  .exploded-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 1000 / 620;
+  }
+
+  /* Animaciones */
+  .animated-cable {
+    animation: cablePulse 4s linear infinite;
+  }
+
+  /* Animación suave de halo luminoso sin cambios de radio ni movimiento */
+  .pulse-ring {
+    pointer-events: none;
+    animation: ringGlowFade 2.5s ease-in-out infinite alternate;
+  }
+
+  .bulb-pulse {
+    animation: bulbGlow 2.5s ease-in-out infinite alternate;
+  }
+
+  .bulb-ring {
+    animation: bulbRingGrow 2.5s ease-in-out infinite alternate;
+  }
+
+  @keyframes cablePulse {
+    from { stroke-dashoffset: 40; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes ringGlowFade {
+    0% {
+      opacity: 0.25;
+      stroke-width: 1px;
+    }
+    100% {
+      opacity: 0.85;
+      stroke-width: 1.6px;
+    }
+  }
+
+  @keyframes bulbGlow {
+    from { opacity: 0.6; }
+    to { opacity: 1; }
+  }
+
+  @keyframes bulbRingGrow {
+    from { opacity: 0.15; }
+    to { opacity: 0.4; }
+  }
+
+  /* Hotspots interactivos: estrictamente fijos, sin transform scale para evitar temblores */
+  .exp-hotspot {
+    cursor: pointer;
+  }
+
+  .exp-hotspot .hotspot-hitbox {
+    pointer-events: all;
+    cursor: pointer;
+  }
+
+  .exp-hotspot .hotspot-bg {
+    transition: fill 0.2s ease, stroke-width 0.2s ease, filter 0.2s ease;
+    pointer-events: none;
+  }
+
+  .exp-hotspot .hotspot-text {
+    transition: fill 0.2s ease;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .exp-hotspot .hotspot-guide-line {
+    transition: stroke-width 0.2s ease, opacity 0.2s ease;
+    pointer-events: none;
+  }
+
+  /* Hover y estado activo: resaltado cromático sin movimiento físico */
+  .exp-hotspot:hover .hotspot-bg,
+  .exp-hotspot.active .hotspot-bg {
+    fill: var(--color-accent);
+    stroke-width: 2.5px;
+    filter: drop-shadow(0 0 8px rgba(163, 76, 43, 0.45));
+  }
+
+  .exp-hotspot:hover .hotspot-text,
+  .exp-hotspot.active .hotspot-text {
+    fill: #FFFFFF;
+  }
+
+  .exp-hotspot:hover .pulse-ring,
+  .exp-hotspot.active .pulse-ring {
+    stroke-width: 2px;
+    opacity: 1;
+    stroke: var(--color-accent);
+  }
+
+  .exp-hotspot:hover .hotspot-guide-line,
+  .exp-hotspot.active .hotspot-guide-line {
+    stroke-width: 1.8px;
+    opacity: 1;
+  }
+
+  /* Especificaciones al pie */
+  .exp-specs-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+  }
+
+  @media (min-width: 640px) {
+    .exp-specs-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .exp-specs-grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  .exp-spec-card {
+    padding: 1.5rem;
+    border-top: 2px solid transparent;
+    border-bottom: 1px solid var(--color-border-light);
+    border-right: 1px solid var(--color-border-light);
+    display: flex;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .exp-spec-card:hover,
+  .exp-spec-card.active {
+    background-color: var(--color-bg-card);
+  }
+
+  .exp-spec-card.active {
+    border-top-color: var(--color-accent);
+  }
+
+  .card-num {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    padding-top: 0.2rem;
+  }
+
+  .card-name {
+    font-size: 0.925rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 0.35rem;
+  }
+
+  .card-text {
+    font-size: 0.775rem;
+    color: var(--color-text-secondary);
+    line-height: 1.45;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-material {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const root = document.getElementById('explodedDiagramRoot');
+    if (!root) return;
+
+    const btns = root.querySelectorAll('.exp-btn');
+    const photoLayer = root.querySelector('.layer-photometry');
+    const specsLayer = root.querySelector('.layer-specs');
+    const cards = root.querySelectorAll('.exp-spec-card');
+    const hotspots = root.querySelectorAll('.exp-hotspot');
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const mode = btn.getAttribute('data-mode');
+        if (photoLayer) {
+          photoLayer.style.display = (mode === 'photometry') ? 'block' : 'none';
+        }
+        if (specsLayer) {
+          specsLayer.style.opacity = (mode === 'specs' || mode === 'exploded') ? '1' : '0.2';
+        }
+      });
+    });
+
+    const setActiveItem = (id) => {
+      if (!id) return;
+      cards.forEach(c => {
+        c.classList.toggle('active', c.getAttribute('data-card') === id);
+      });
+      hotspots.forEach(h => {
+        h.classList.toggle('active', h.getAttribute('data-target') === id);
+      });
+    };
+
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        setActiveItem(card.getAttribute('data-card'));
+      });
+      card.addEventListener('click', () => {
+        setActiveItem(card.getAttribute('data-card'));
+      });
+    });
+
+    hotspots.forEach(spot => {
+      spot.addEventListener('mouseenter', () => {
+        setActiveItem(spot.getAttribute('data-target'));
+      });
+      spot.addEventListener('click', () => {
+        setActiveItem(spot.getAttribute('data-target'));
+      });
+    });
+  })();
+</script>

@@ -1,0 +1,36 @@
+{
+  "name": "Jarrón Estrato",
+  "collection": "coleccion-tierra",
+  "category": "Objetos",
+  "description": "Vaso escultórico modelado al torno en pasta de gres con inclusiones de arena volcánica y esmaltado interior impermeable. Cada pieza presenta variaciones tonales únicas derivadas de la atmósfera del horno.",
+  "materials": ["Gres chamotado de alta temperatura 1260°C", "Esmalte mate libre de plomo"],
+  "dimensions": "Ø 22 cm × Altura 36 cm · Peso 3.8 kg",
+  "leadTime": "En stock o 2 semanas",
+  "images": [
+    {
+      "src": "https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Jarrón Estrato de cerámica gres con flor seca"
+    }
+  ],
+  "variants": [
+    {
+      "id": "gres-crudo",
+      "name": "Gres Crudo Terracota",
+      "finish": "Textura rugosa natural",
+      "image": "https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?auto=format&fit=crop&w=1200&q=80",
+      "colorHex": "#A66A4E"
+    },
+    {
+      "id": "gres-ceniza",
+      "name": "Gres Ceniza de Haya",
+      "finish": "Esmalte suave gris mineral",
+      "image": "https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?auto=format&fit=crop&w=1200&q=80",
+      "colorHex": "#8E887E"
+    }
+  ],
+  "enquiry": {
+    "label": "Consultar disponibilidad de jarrón",
+    "reference": "DEMO-PLIEGUE-05"
+  },
+  "featured": false
+}

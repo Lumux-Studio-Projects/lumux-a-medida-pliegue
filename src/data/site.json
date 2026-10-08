@@ -1,0 +1,35 @@
+{
+  "brand": {
+    "name": "Pliegue",
+    "legalName": "Atelier Pliegue Design S.A. de C.V.",
+    "tagline": "Piezas de iluminación y mobiliario escultórico",
+    "description": "Taller de diseño y edición de mobiliario contemporáneo. Fabricamos objetos duraderos a partir de materiales nobles con manufactura artesanal en lotes numerados.",
+    "founded": 2020,
+    "city": "Guadalajara / Ciudad de México"
+  },
+  "nav": [
+    { "label": "Inicio", "href": "/" },
+    { "label": "Colecciones", "href": "/colecciones" },
+    { "label": "Catálogo", "href": "/catalogo" },
+    { "label": "Marca & Taller", "href": "/marca" },
+    { "label": "Contacto & Cotización", "href": "/contacto" }
+  ],
+  "contact": {
+    "email": "hola@atelierpliegue.demo",
+    "phone": "+52 (33) 3810-7422",
+    "address": "Calle Libertad 1420, Col. Americana, Guadalajara, Jalisco",
+    "showroomHours": "Lunes a Viernes · 10:00 a 18:00 h (Previa Cita)",
+    "instagram": "https://instagram.com/atelierpliegue.demo"
+  },
+  "commercialBanner": {
+    "badge": "Demo Oficial Lumux Studio",
+    "text": "Ejemplo interactivo de Sitio Web a Medida para marcas de producto, mobiliario y catálogos de consulta.",
+    "ctaText": "Quiero un catálogo web similar",
+    "ctaLink": "https://lumuxstudio.com/es"
+  },
+  "seo": {
+    "defaultTitle": "Atelier Pliegue | Mobiliario & Iluminación Escultórica",
+    "description": "Catálogo de diseño y edición de piezas de autor: lámparas de mesa, mesas de madera maciza, sillas y cerámica gres.",
+    "robots": "noindex, nofollow"
+  }
+}

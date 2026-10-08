@@ -1,0 +1,40 @@
+{
+  "name": "Jarra & Tetera Mineral",
+  "collection": "coleccion-tierra",
+  "category": "Objetos & Cerámica",
+  "description": "Jarra de vertido y tetera artesanal de 650 ml con pico antigoteo modelado a mano y asa ergonómica de latón natural sin barniz. Diseñada para extracciones pausadas de café de filtro y servicios de mesa contemporáneos.",
+  "materials": [
+    "Gres cerámico chamotado a 1,280 °C",
+    "Asa desmontable en latón natural mecanizado",
+    "Esmalte interior liso impermeable libre de tóxicos"
+  ],
+  "dimensions": "Ø 12 cm × H 16 cm (Capacidad 650 ml) · Peso 820 g",
+  "leadTime": "En stock o 2 semanas",
+  "images": [
+    {
+      "src": "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Jarra y tetera artesanal de gres cerámico y latón"
+    }
+  ],
+  "variants": [
+    {
+      "id": "jarra-crema",
+      "name": "Arena & Latón",
+      "finish": "Esmalte crudo y latón cepillado",
+      "image": "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=1200&q=80",
+      "colorHex": "#D6C7B2"
+    },
+    {
+      "id": "jarra-negra",
+      "name": "Basalto Negro & Latón",
+      "finish": "Textura rugosa y latón brillante",
+      "image": "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=1200&q=80",
+      "colorHex": "#343330"
+    }
+  ],
+  "enquiry": {
+    "label": "Consultar jarra de vertido",
+    "reference": "DEMO-PLIEGUE-08"
+  },
+  "featured": true
+}

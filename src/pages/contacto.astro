@@ -1,0 +1,174 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import siteData from '../data/site.json';
+
+const url = Astro.url;
+const refParam = url.searchParams.get('ref') || '';
+const itemParam = url.searchParams.get('item') || '';
+const acabadoParam = url.searchParams.get('acabado') || '';
+---
+
+<BaseLayout 
+  title="Contacto & Cotización" 
+  description="Solicita cotización de piezas de catálogo, visitas al showroom o especificación arquitectónica con Atelier Pliegue."
+>
+  <div class="page-header">
+    <div class="container">
+      <span class="tag-meta">Atención Directa del Atelier</span>
+      <h1 class="header-h1">CONSULTAS & COTIZACIONES</h1>
+      <p class="header-lead">
+        Completa el formulario para recibir nuestra lista de precios oficial, disponibilidad de lotes o programar una visita a nuestro showroom en Guadalajara.
+      </p>
+    </div>
+  </div>
+
+  <section class="contact-main-section">
+    <div class="container contact-layout">
+      <!-- Datos de contacto -->
+      <aside class="showroom-sidebar">
+        <div class="side-card">
+          <span class="tag-meta">Showroom Principal</span>
+          <h2 class="side-title">GUADALAJARA, JALISCO</h2>
+          <p class="side-addr">{siteData.contact.address}</p>
+          <p class="side-hours">{siteData.contact.showroomHours}</p>
+        </div>
+
+        <div class="side-card">
+          <span class="tag-meta">Canales Directos</span>
+          <dl class="contact-dl">
+            <div>
+              <dt>Consultas de Venta:</dt>
+              <dd><a href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a></dd>
+            </div>
+            <div>
+              <dt>Teléfono Taller:</dt>
+              <dd>{siteData.contact.phone}</dd>
+            </div>
+            <div>
+              <dt>Instagram:</dt>
+              <dd><a href={siteData.contact.instagram} target="_blank" rel="noopener">@atelierpliegue.demo</a></dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="side-card trade-notice">
+          <span class="tag-meta">Para Despachos de Arquitectura</span>
+          <p class="trade-p">
+            Realizamos descuentos comerciales por volumen y confeccionamos piezas a medida para proyectos hoteleros y residenciales de gran escala.
+          </p>
+        </div>
+      </aside>
+
+      <!-- Formulario de Consulta con parámetros prellenados -->
+      <div class="form-content-area">
+        <EnquiryForm 
+          reference={refParam}
+          item={itemParam}
+          acabado={acabadoParam}
+        />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: clamp(3.5rem, 6vw, 6rem) 0 3.5rem;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+  }
+
+  .header-h1 {
+    margin: 0.75rem 0 1rem;
+  }
+
+  .header-lead {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--color-text-secondary);
+    max-width: 650px;
+    line-height: 1.6;
+  }
+
+  .contact-main-section {
+    padding: clamp(4rem, 8vw, 8rem) 0;
+  }
+
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+
+  @media (min-width: 900px) {
+    .contact-layout {
+      grid-template-columns: 320px 1fr;
+      gap: 5rem;
+    }
+  }
+
+  .showroom-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .side-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .side-title {
+    font-size: 1.35rem;
+    margin-top: 0.25rem;
+  }
+
+  .side-addr {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .side-hours {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .contact-dl {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+
+  .contact-dl dt {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+  }
+
+  .contact-dl dd a {
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+
+  .trade-notice {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .trade-p {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    margin-top: 0.5rem;
+  }
+</style>

@@ -1,0 +1,428 @@
+---
+interface Props {
+  reference?: string;
+  item?: string;
+  acabado?: string;
+}
+
+const { 
+  reference = "", 
+  item = "", 
+  acabado = "" 
+} = Astro.props;
+---
+
+<div class="enquiry-form-card" id="enquiryCardRoot">
+  <div class="demo-ethical-notice">
+    <span class="notice-bullet" aria-hidden="true">ℹ</span>
+    <p>
+      <strong>Simulador de Cotización y Consulta:</strong> Esta demo valida los campos y prellena la referencia del producto seleccionado sin realizar transacciones monetarias ni enviar datos personales a servidores externos.
+    </p>
+  </div>
+
+  <form class="product-enquiry-form" id="enquiryForm" novalidate>
+    <!-- Datos de la pieza consultada -->
+    <div class="item-ref-banner">
+      <div class="ref-field-group">
+        <label for="itemRef">Referencia de Catálogo</label>
+        <span class="ref-badge-val" id="refDisplay">{reference || "CONSULTA-GENERAL"}</span>
+        <input 
+          type="hidden" 
+          id="itemRef" 
+          name="reference" 
+          value={reference || "CONSULTA-GENERAL"} 
+        />
+      </div>
+
+      <div class="ref-field-group">
+        <label for="itemName">Pieza de Interés</label>
+        <span class="ref-badge-val" id="itemDisplay">{item || "Catálogo de autor"}</span>
+        <input 
+          type="hidden" 
+          id="itemName" 
+          name="item" 
+          value={item || "Catálogo de autor"} 
+        />
+      </div>
+
+      <div class="ref-field-group">
+        <label for="itemFinish">Acabado Seleccionado</label>
+        <span class="ref-badge-val" id="finishDisplay">{acabado || "Por definir en cotización"}</span>
+        <input 
+          type="hidden" 
+          id="itemFinish" 
+          name="finish" 
+          value={acabado || "Por definir en cotización"} 
+        />
+      </div>
+    </div>
+
+    <!-- Datos del solicitante -->
+    <div class="form-row-two">
+      <div class="field-item">
+        <label for="clientName">Nombre completo <span class="req">*</span></label>
+        <input type="text" id="clientName" name="name" placeholder="Ej. Mariana Orozco" required />
+        <span class="err-text" id="nameErr">Introduce tu nombre.</span>
+      </div>
+
+      <div class="field-item">
+        <label for="clientEmail">Correo electrónico <span class="req">*</span></label>
+        <input type="email" id="clientEmail" name="email" placeholder="mariana@estudio.com" required />
+        <span class="err-text" id="emailErr">Introduce un correo válido.</span>
+      </div>
+    </div>
+
+    <div class="form-row-two">
+      <div class="field-item">
+        <label for="clientCity">Ciudad o destino de envío</label>
+        <input type="text" id="clientCity" name="city" placeholder="Ej. Monterrey / CDMX / Guadalajara" />
+      </div>
+
+      <div class="field-item">
+        <label for="quantity">Cantidad estimada de piezas</label>
+        <select id="quantity" name="quantity">
+          <option value="1">1 pieza (Uso particular)</option>
+          <option value="2-4">2 a 4 piezas</option>
+          <option value="5+">5+ piezas (Proyecto residencial o comercial)</option>
+          <option value="lote-arquitectura">Lote para especificación arquitectónica</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-item">
+      <label for="clientMessage">Mensaje adicional o requerimientos de plazo</label>
+      <textarea 
+        id="clientMessage" 
+        name="message" 
+        rows="3" 
+        placeholder="Indícanos si requieres muestra de madera o acabado, ficha técnica de instalación o plazos de entrega específicos..."
+      ></textarea>
+    </div>
+
+    <div class="form-actions-bar">
+      <button type="submit" class="btn btn-primary" id="enquirySubmitBtn">
+        Enviar Solicitud de Cotización
+      </button>
+      <span class="note-time">Respuesta del taller en 24 a 48 h con catálogo de precios oficial.</span>
+    </div>
+  </form>
+
+  <!-- Confirmación de simulación -->
+  <div class="sim-result-card" id="enquiryResult" hidden>
+    <div class="result-badge">Consulta Validada Exitosamente</div>
+    <h3 class="result-title">Simulación de Consulta de Catálogo</h3>
+    <p class="result-desc">
+      El formulario retuvo correctamente el producto, su referencia y el acabado deseado. En la solución final de Lumux, esta consulta llegará a tu correo de ventas o CRM.
+    </p>
+    <div class="result-summary" id="resultSummaryBox"></div>
+    <button type="button" class="btn btn-secondary" id="resetEnquiryBtn">
+      Probar otra consulta
+    </button>
+  </div>
+</div>
+
+<style>
+  .enquiry-form-card {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    padding: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .demo-ethical-notice {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.85rem 1.25rem;
+    background-color: var(--color-bg-primary);
+    border-left: 3px solid var(--color-accent);
+    border-radius: var(--radius-xs);
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+
+  .notice-bullet {
+    color: var(--color-accent);
+    font-weight: bold;
+  }
+
+  .product-enquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .item-ref-banner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    background-color: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    padding: 1.25rem;
+    border-radius: var(--radius-xs);
+  }
+
+  @media (min-width: 640px) {
+    .item-ref-banner {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .ref-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .ref-field-group label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .ref-badge-val {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    word-break: break-word;
+  }
+
+  .form-row-two {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .form-row-two {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  .field-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .field-item label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-primary);
+  }
+
+  .req {
+    color: var(--color-accent);
+  }
+
+  input[type="text"],
+  input[type="email"],
+  select,
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    padding: 0.85rem 1rem;
+    font-size: 0.9375rem;
+    font-family: inherit;
+    color: var(--color-text-primary);
+    border-radius: var(--radius-xs);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  select {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A34C2B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 2px rgba(163, 76, 43, 0.15);
+  }
+
+  .err-text {
+    font-size: 0.75rem;
+    color: #B53826;
+    display: none;
+    margin-top: 0.25rem;
+  }
+
+  .has-error input {
+    border-color: #B53826;
+  }
+
+  .has-error .err-text {
+    display: block;
+  }
+
+  .form-actions-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  @media (min-width: 640px) {
+    .form-actions-bar {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .note-time {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .sim-result-card {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    padding: 2rem;
+    border-radius: var(--radius-xs);
+  }
+
+  .sim-result-card[hidden] {
+    display: none;
+  }
+
+  .result-badge {
+    display: inline-block;
+    padding: 0.25rem 0.65rem;
+    background-color: var(--color-accent-light);
+    color: var(--color-accent);
+    font-size: 0.725rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: var(--radius-xs);
+    margin-bottom: 0.75rem;
+  }
+
+  .result-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .result-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .result-summary {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border-light);
+    padding: 1.25rem;
+    border-radius: var(--radius-xs);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const form = document.getElementById('enquiryForm');
+    const result = document.getElementById('enquiryResult');
+    const reset = document.getElementById('resetEnquiryBtn');
+    const summary = document.getElementById('resultSummaryBox');
+
+    if (!form || !result) return;
+
+    // Si existen parámetros URL, actualizar campos de inmediato
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('ref')) {
+      const refVal = params.get('ref');
+      const refInput = document.getElementById('itemRef');
+      const refDisp = document.getElementById('refDisplay');
+      if (refInput) refInput.value = refVal;
+      if (refDisp) refDisp.textContent = refVal;
+    }
+    if (params.get('item')) {
+      const itemVal = params.get('item');
+      const itemInput = document.getElementById('itemName');
+      const itemDisp = document.getElementById('itemDisplay');
+      if (itemInput) itemInput.value = itemVal;
+      if (itemDisp) itemDisp.textContent = itemVal;
+    }
+    if (params.get('acabado')) {
+      const finishVal = params.get('acabado');
+      const finishInput = document.getElementById('itemFinish');
+      const finishDisp = document.getElementById('finishDisplay');
+      if (finishInput) finishInput.value = finishVal;
+      if (finishDisp) finishDisp.textContent = finishVal;
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let valid = true;
+
+      const name = document.getElementById('clientName');
+      const email = document.getElementById('clientEmail');
+
+      const nameBlock = name.closest('.field-item');
+      if (!name.value.trim()) {
+        nameBlock.classList.add('has-error');
+        valid = false;
+      } else {
+        nameBlock.classList.remove('has-error');
+      }
+
+      const emailBlock = email.closest('.field-item');
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email.value.trim() || !re.test(email.value)) {
+        emailBlock.classList.add('has-error');
+        valid = false;
+      } else {
+        emailBlock.classList.remove('has-error');
+      }
+
+      if (valid) {
+        const data = new FormData(form);
+        summary.innerHTML = `
+          <div><strong>Pieza:</strong> ${data.get('item')} (${data.get('reference')})</div>
+          <div><strong>Acabado:</strong> ${data.get('finish')}</div>
+          <div><strong>Cliente:</strong> ${data.get('name')} (${data.get('email')})</div>
+          <div><strong>Destino:</strong> ${data.get('city') || 'No especificado'}</div>
+          <div><strong>Cantidad:</strong> ${data.get('quantity')}</div>
+          <div><strong>Mensaje:</strong> ${data.get('message') || 'Sin notas adicionales'}</div>
+        `;
+
+        form.hidden = true;
+        result.hidden = false;
+        result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+
+    reset?.addEventListener('click', () => {
+      form.reset();
+      result.hidden = true;
+      form.hidden = false;
+    });
+  })();
+</script>

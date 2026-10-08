@@ -1,0 +1,165 @@
+---
+// ProductFaq.astro
+// Preguntas Frecuentes con Acordeón Exclusivo (Cierre Automático)
+---
+
+<div class="faq-accordion-box">
+  <!-- Pregunta 1 -->
+  <details class="faq-item" name="faq-pliegue" open>
+    <summary class="faq-summary">
+      <span class="faq-question">¿Las tazas y piezas de gres cerámico son aptas para lavavajillas y microondas?</span>
+      <span class="faq-icon">+</span>
+    </summary>
+    <div class="faq-content">
+      <p>
+        Sí, absolutamente. Todo nuestro gres se vitrifica a 1,280 °C en cocción reductora lenta, alcanzando una porosidad menor al 0.5%. Esto las hace completamente impermeables, resistentes al choque térmico y aptas para lavavajillas residenciales y comerciales de cafetería. Los esmaltes son 100% libres de plomo y seguros para uso alimentario diario.
+      </p>
+    </div>
+  </details>
+
+  <!-- Pregunta 2 -->
+  <details class="faq-item" name="faq-pliegue">
+    <summary class="faq-summary">
+      <span class="faq-question">¿Cómo protegen las piezas durante el envío a toda la República y el extranjero?</span>
+      <span class="faq-icon">+</span>
+    </summary>
+    <div class="faq-content">
+      <p>
+        Cada objeto viaja en una caja de cartón reciclado reforzado de triple canal con cunas interiores de pulpa moldeada biodegradable y cantoneras de madera. Los envíos están 100% asegurados contra rotura: si alguna pieza sufre el más mínimo percance en tránsito, la reemplazamos de inmediato sin costo.
+      </p>
+    </div>
+  </details>
+
+  <!-- Pregunta 3 -->
+  <details class="faq-item" name="faq-pliegue">
+    <summary class="faq-summary">
+      <span class="faq-question">¿Tienen tarifas wholesale para cafeterías de especialidad y hoteles?</span>
+      <span class="faq-icon">+</span>
+    </summary>
+    <div class="faq-content">
+      <p>
+        Sí. Contamos con un programa especial para tostadores, barras de café y proyectos de hotelería boutique con descuentos escalonados a partir de 24 unidades, grabado opcional de sello de marca en la base y reposición rápida de piezas individuales.
+      </p>
+    </div>
+  </details>
+
+  <!-- Pregunta 4 -->
+  <details class="faq-item" name="faq-pliegue">
+    <summary class="faq-summary">
+      <span class="faq-question">¿Cómo se limpia y mantiene el roble blanco macizo y el latón natural?</span>
+      <span class="faq-icon">+</span>
+    </summary>
+    <div class="faq-content">
+      <p>
+        El roble blanco se limpia con un paño suave ligeramente humedecido. Incluimos una lata de nuestra cera de abeja botánica para nutrir la madera una vez al año. El latón macizo no lleva barnices plásticos; puedes dejar que desarrolle su pátina dorada natural con el tiempo, o devolverle el brillo inicial en 30 segundos usando un paño con pasta de pulir o jugo de limón y sal marina.
+      </p>
+    </div>
+  </details>
+
+  <!-- Pregunta 5 -->
+  <details class="faq-item" name="faq-pliegue">
+    <summary class="faq-summary">
+      <span class="faq-question">¿Se pueden solicitar dimensiones especiales para comedores o islas?</span>
+      <span class="faq-icon">+</span>
+    </summary>
+    <div class="faq-content">
+      <p>
+        Sí. A través de nuestro Programa Trade, adaptamos el largo y ancho de la Mesa Umbría, la altura del Banco Vértice o la longitud del cable textil y fuste de las lámparas a las cotas específicas de tu proyecto residencial o comercial.
+      </p>
+    </div>
+  </details>
+</div>
+
+<style>
+  .faq-accordion-box {
+    max-width: 860px;
+    margin: 2rem auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .faq-item {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    overflow: hidden;
+    transition: border-color var(--transition-fast);
+  }
+
+  .faq-item[open] {
+    border-color: var(--color-accent);
+  }
+
+  .faq-summary {
+    padding: 1.35rem 1.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    cursor: pointer;
+    user-select: none;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    list-style: none;
+  }
+
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-question {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+  }
+
+  .faq-icon {
+    font-family: var(--font-mono);
+    font-size: 1.35rem;
+    color: var(--color-accent);
+    transition: transform var(--transition-fast);
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-content {
+    padding: 0 1.75rem 1.5rem 1.75rem;
+    border-top: 1px dashed var(--color-border-light);
+    margin-top: 0.25rem;
+    padding-top: 1.25rem;
+    color: var(--color-text-secondary);
+    font-size: 0.925rem;
+    line-height: 1.65;
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const initFaqAccordions = () => {
+      const boxes = document.querySelectorAll('.faq-accordion-box');
+      boxes.forEach(box => {
+        const items = box.querySelectorAll('.faq-item');
+        items.forEach(detail => {
+          detail.addEventListener('toggle', () => {
+            if (detail.open) {
+              items.forEach(other => {
+                if (other !== detail && other.open) {
+                  other.open = false;
+                }
+              });
+            }
+          });
+        });
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initFaqAccordions);
+    } else {
+      initFaqAccordions();
+    }
+  })();
+</script>

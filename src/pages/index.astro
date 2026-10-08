@@ -1,0 +1,1675 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import ExplodedProductDiagram from '../components/ExplodedProductDiagram.astro';
+import ProductMaterialBoard from '../components/ProductMaterialBoard.astro';
+import AtelierCraftGallery from '../components/AtelierCraftGallery.astro';
+import CeramicColorSelector from '../components/CeramicColorSelector.astro';
+import ProductReviews from '../components/ProductReviews.astro';
+import ProductFaq from '../components/ProductFaq.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import { getCollection } from 'astro:content';
+
+const products = await getCollection('products');
+const collections = await getCollection('collections');
+
+// Ordenar productos con los destacados primero
+const sortedProducts = products.sort((a, b) => (b.data.featured ? 1 : 0) - (a.data.featured ? 1 : 0));
+---
+
+<BaseLayout title="Inicio — Mobiliario, Cerámica & Iluminación de Autor">
+  <!-- 1. HERO MONUMENTAL CON COMPOSICIÓN MULTI-IMAGEN, CALIDEZ TÁCTIL & RITUAL DEL CAFÉ -->
+  <section class="pliegue-hero" id="hero">
+    <div class="container hero-layout">
+      <div class="hero-copy">
+        <div class="hero-eyebrow-container">
+          <div class="hero-atelier-tag">
+            <span class="status-dot"></span>
+            <span class="atelier-name">ATELIER PLIEGUE</span>
+            <span class="tag-divider">/</span>
+            <span class="atelier-meta">EDICIÓN 2026 · GUADALAJARA</span>
+          </div>
+
+          <div class="hero-rating-clean">
+            <span class="star-glyph">★</span>
+            <span class="rating-num">4.9</span>
+            <span class="rating-desc">128 reseñas verificadas</span>
+          </div>
+        </div>
+
+        <h1 class="hero-h1">
+          La síntesis entre la materia honesta, el silencio y la <span class="h1-accent">calma cotidiana</span>.
+        </h1>
+        <p class="hero-lead">
+          Diseñamos y editamos objetos de iluminación, vajilla para el ritual del café y mesas elaboradas a mano en roble macizo, latón pulido y gres vitrificado a 1,280 °C. Piezas concebidas para trascender modas temporales.
+        </p>
+
+        <div class="hero-actions-group">
+          <div class="hero-buttons-pair">
+            <a href="#catalogo-destacado" class="btn btn-primary hero-btn-main">
+              <span>Explorar Catálogo ({products.length})</span>
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+            <a href="#ceramica-color" class="btn btn-secondary hero-btn-sub">
+              <span>Ritual del Café & Esmaltes</span>
+            </a>
+          </div>
+
+          <div class="hero-quick-links">
+            <span class="quick-label">ACCESO RÁPIDO:</span>
+            <a href="#despiece-tecnico" class="quick-jump">Despiece Técnico 1:2 ↓</a>
+            <span class="quick-sep">·</span>
+            <a href="#materias-primas" class="quick-jump">Banco de Materias ↓</a>
+          </div>
+        </div>
+
+        <div class="hero-specs-row">
+          <div class="h-spec">
+            <span class="h-label">ORIGEN // MATRICERÍA</span>
+            <span class="h-val">Col. Americana, GDL</span>
+          </div>
+          <div class="h-spec">
+            <span class="h-label">ESTRUCTURA & ENSAMBLE</span>
+            <span class="h-val">Roble Blanco FSC 100%</span>
+          </div>
+          <div class="h-spec">
+            <span class="h-label">COCCIÓN ALTA TEMPERATURA</span>
+            <span class="h-val">Gres Vitrificado 1,280 °C</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-showcase">
+        <!-- Composición Multi-Imagen / Tríptico Inspirado en Acme Cups y Wiemer Store -->
+        <div class="hero-triptych">
+          <!-- Objeto Principal -->
+          <div class="triptych-main-card">
+            <img 
+              src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1400&q=80" 
+              alt="Lámpara Pliegue de mesa sobre roble macizo" 
+              class="hero-product-img"
+            />
+            <div class="showcase-badge">
+              <div>
+                <span class="badge-title">Lámpara Pliegue</span>
+                <span class="badge-cat tag-meta">Colección Luz · Ref. DEMO-PLIEGUE-01</span>
+              </div>
+              <span class="badge-dim">420 × 280 mm · Roble & Latón</span>
+            </div>
+          </div>
+
+          <!-- Muestra Flotante 1: Cerámica de Café (Acme Cups) -->
+          <div class="triptych-subcard subcard-left">
+            <img 
+              src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80" 
+              alt="Taza Tectónica de gres cerámico"
+              class="subcard-thumb"
+            />
+            <div class="subcard-info">
+              <span class="subcard-name">Taza Tectónica 220 ml</span>
+              <span class="subcard-tag">Gres Esmaltado 1,280 °C</span>
+            </div>
+          </div>
+
+          <!-- Muestra Flotante 2: Detalle de Latón Torneado (Wiemer) -->
+          <div class="triptych-subcard subcard-right">
+            <img 
+              src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80" 
+              alt="Detalle de latón macizo natural"
+              class="subcard-thumb"
+            />
+            <div class="subcard-info">
+              <span class="subcard-name">Rótula de Latón</span>
+              <span class="subcard-tag">Pátina Viva sin Lacar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="atelier-content">
+  <div class="atelier-note container">
+    <p>Objetos para vivir con ellos.</p>
+    <a href="/marca">Conoce el taller <span aria-hidden="true">↗</span></a>
+  </div>
+
+  <!-- 5. EXPLORACIÓN DE COLECCIONES (LUZ & TIERRA) -->
+  <section class="collections-overview-section" id="colecciones">
+    <div class="container">
+      <div class="sec-header">
+        <div>
+          <h2 class="sec-title">Dos formas de habitar</h2>
+          <p class="sec-subtitle">Luz y Tierra. Iluminación, mobiliario y objetos que comparten una misma forma de trabajar.</p>
+        </div>
+        <a href="/colecciones" class="link-editorial">Ver las colecciones ↗</a>
+      </div>
+
+      <div class="collections-cards-grid">
+        {collections.map(col => (
+          <a href="/colecciones" class="collection-overview-card photo-reveal">
+            <div class="col-img-frame">
+              <img src={col.data.coverImage} alt={col.data.title} class="col-img" />
+              <div class="col-overlay">
+                <span class="col-badge">Explorar {col.data.title} →</span>
+              </div>
+            </div>
+            <div class="col-info">
+              
+              <h3 class="col-name">{col.data.title}</h3>
+              <p class="col-sub">{col.data.subtitle}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. CATÁLOGO SELECTO DE PIEZAS DESTACADAS (8 PIEZAS COMPLETAS) -->
+  <section class="featured-catalog-section" id="catalogo-destacado">
+    <div class="container">
+      <div class="sec-header">
+        <div>
+          <h2 class="sec-title">Piezas del taller</h2>
+          <p class="sec-subtitle">Objetos en producción activa disponibles con tiempo de manufactura de 2 a 4 semanas.</p>
+        </div>
+        <a href="/catalogo" class="link-editorial">Todas las piezas ({products.length}) ↗</a>
+      </div>
+
+      <div class="products-grid">
+        {sortedProducts.map(p => (
+          <ProductCard 
+            name={p.data.name}
+            category={p.data.category}
+            collection={p.data.collection}
+            image={p.data.images[0].src}
+            dimensions={p.data.dimensions}
+            slug={p.id}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. MANIFIESTO DE LA MATERIA LENTA -->
+  <section class="manifesto-section" id="manifiesto">
+    <div class="container-narrow">
+      <blockquote class="manifesto-quote">
+        “No perseguimos la novedad estacional. Una taza, una mesa o una lámpara debe ganar belleza con el tacto de las décadas, envejeciendo con la dignidad que solo los materiales verdaderos poseen.”
+      </blockquote>
+      <div class="manifesto-author text-center">
+        <span class="author-title">Atelier Pliegue</span>
+        <span class="author-sub">Manifiesto de la Producción Calma · Guadalajara, México</span>
+      </div>
+
+      <div class="manifesto-triad">
+        <div class="triad-item">
+          <h3 class="triad-title">Permanencia Formal</h3>
+          <p class="triad-desc">Líneas depuradas que rehúyen la estridencia visual para integrarse en arquitecturas contemporáneas con serenidad perdurable.</p>
+        </div>
+        <div class="triad-item">
+          <h3 class="triad-title">Reparabilidad Total</h3>
+          <p class="triad-desc">Cada componente es desmontable y reemplazable. Ningún ensamble utiliza adhesivos sintéticos que impidan la restauración futura.</p>
+        </div>
+        <div class="triad-item">
+          <h3 class="triad-title">Pátina Viva</h3>
+          <p class="triad-desc">El latón sin lacar y la madera con aceites vegetales interactúan con la atmósfera y el tacto humano, adquiriendo carácter único.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. MÉTRICAS DE TALLER Y PRODUCCIÓN COLECCIONABLE -->
+  <section class="metrics-section" id="metricas-taller">
+    <div class="container">
+      <div class="metrics-header">
+        <h2 class="sec-title">En el taller</h2>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-val">320</div>
+          <div class="metric-lbl">Piezas Editadas al Año</div>
+          <p class="metric-txt">Lotes numerados individualmente con placa grabada al láser y certificado firmado por el maestro ebanista.</p>
+        </div>
+
+        <div class="metric-box">
+          <div class="metric-val">100<span class="metric-unit">%</span></div>
+          <div class="metric-lbl">Madera Certificada FSC</div>
+          <p class="metric-txt">Roble blanco y nogal procedentes exclusivamente de bosques gestionados con tala regenerativa.</p>
+        </div>
+
+        <div class="metric-box">
+          <div class="metric-val">48 <span class="metric-unit">h</span></div>
+          <div class="metric-lbl">Cocción Lenta a 1,280 °C</div>
+          <p class="metric-txt">Gres cerámico vitrificado de altísima resistencia mecánica y tacto terroso impermeable.</p>
+        </div>
+
+        <div class="metric-box">
+          <div class="metric-val">25 <span class="metric-unit">Años</span></div>
+          <div class="metric-lbl">Garantía Estructural</div>
+          <p class="metric-txt">Compromiso de taller con la integridad de ensambles de espiga, caja y uniones mecánicas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. GAMA CROMÁTICA DE CERÁMICA & ESMALTES MINERALES (INSPIRADO EN ACME CUPS) -->
+  <section class="ceramic-palette-section" id="ceramica-color">
+    <div class="container">
+      <div class="sec-header">
+        <div>
+          <h2 class="sec-title">El color del primer café</h2>
+          <p class="sec-subtitle">
+            Cuatro tonos minerales desarrollados para interactuar con la luz de la mañana y el calor del café de especialidad.
+          </p>
+        </div>
+        <div class="rating-badge">
+          <span>★ 4.9</span>
+          <span>Apto para Baristas & Cafeterías</span>
+        </div>
+      </div>
+
+      <CeramicColorSelector />
+    </div>
+  </section>
+
+  <!-- 8. DIAGRAMA SVG ANIMADO — DESPIECE TÉCNICO INTERACTIVO -->
+  <section class="exploded-section" id="despiece-tecnico">
+    <div class="container">
+      <div class="sec-header">
+        <div>
+          <h2 class="sec-title">Una lámpara, pieza por pieza</h2>
+          <p class="sec-subtitle">
+            Interactúa con los 5 componentes que estructuran nuestra pieza emblemática: tolerancias, uniones de latón y emisión fotométrica de 2,700 Kelvin.
+          </p>
+        </div>
+      </div>
+
+      <ExplodedProductDiagram />
+    </div>
+  </section>
+
+  <!-- 9. LOOKBOOK DE ATMÓSFERAS VIVAS (GALERÍA ASIMÉTRICA) -->
+  <section class="lookbook-section" id="atmósferas">
+    <div class="container">
+      <div class="sec-header">
+        <div>
+          <h2 class="sec-title">La vida alrededor de una pieza</h2>
+          <p class="sec-subtitle">Las piezas de Pliegue en diálogo con la arquitectura residencial y hotelera de autor.</p>
+        </div>
+      </div>
+
+      <div class="lookbook-masonry">
+        <div class="lookbook-item item-large photo-reveal" tabindex="0">
+          <div class="lookbook-img-frame">
+            <img 
+              src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80" 
+              alt="Rincón de lectura con Lámpara Pliegue en residencia de San Ángel"
+              class="lookbook-img"
+            />
+          </div>
+          <div class="lookbook-meta">
+            <span class="look-title">Residencia San Ángel · Ciudad de México</span>
+            <span class="look-desc">Lámpara Pliegue en sobremesa de roble macizo con luz cenital rasante.</span>
+          </div>
+        </div>
+
+        <div class="lookbook-item item-portrait photo-reveal" tabindex="0">
+          <div class="lookbook-img-frame">
+            <img 
+              src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80" 
+              alt="Mesa Baja Estría y Cuenco Arcilla en estancia contemporánea"
+              class="lookbook-img"
+            />
+          </div>
+          <div class="lookbook-meta">
+            <span class="look-title">Ático Chapultepec · Guadalajara</span>
+            <span class="look-desc">Mesa Baja Estría en nogal aceitado y gres chamotado.</span>
+          </div>
+        </div>
+
+        <div class="lookbook-item item-landscape photo-reveal" tabindex="0">
+          <div class="lookbook-img-frame">
+            <img 
+              src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1000&q=80" 
+              alt="Suite Hotel Boutique con iluminación y consola suspendida"
+              class="lookbook-img"
+            />
+          </div>
+          <div class="lookbook-meta">
+            <span class="look-title">Casa de Campo · Valle de Bravo</span>
+            <span class="look-desc">Silla Duna y apliques cerámicos en dormitorio de descanso.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. LABORATORIO DE MATERIAS PRIMAS NOBLES (INSPIRADO EN WIEMER STORE) -->
+  <section class="raw-materials-section" id="materias-primas">
+    <div class="container">
+      <div class="sec-header">
+        <div>
+          <h2 class="sec-title">La materia, de cerca</h2>
+          <p class="sec-subtitle">Cuatro elementos fundamentales definen la paleta táctil y estructural de nuestro atelier.</p>
+        </div>
+      </div>
+
+      <ProductMaterialBoard />
+    </div>
+  </section>
+
+  <!-- 11. EL OFICIO EN EL ATELIER (BEHIND-THE-SCENES FOTOGRÁFICO) -->
+  <section class="atelier-craft-section" id="oficio-taller">
+    <div class="container">
+      <div class="sec-header">
+        <div>
+          <h2 class="sec-title">Antes de llegar a tu casa</h2>
+          <p class="sec-subtitle">
+            Desde el torno alfarero tradicional y los cepillos de ebanista hasta las pruebas pirómetricas de cocción lenta a 1,280 °C.
+          </p>
+        </div>
+      </div>
+
+      <AtelierCraftGallery />
+    </div>
+  </section>
+
+  <!-- 12. HISTORIAS DE LA COMUNIDAD & RESEÑAS VERIFICADAS (ACME CUPS STYLE) -->
+  <section class="reviews-section" id="testimonios">
+    <div class="container">
+      <div class="sec-header">
+        <div>
+          <h2 class="sec-title">Piezas que ya tienen una historia</h2>
+          <p class="sec-subtitle">
+            Opiniones reales de baristas, directores de despachos de arquitectura y coleccionistas particulares.
+          </p>
+        </div>
+        <div class="rating-badge">
+          <span>★ 4.9 / 5.0</span>
+          <span>128 Reseñas Verificadas</span>
+        </div>
+      </div>
+
+      <ProductReviews />
+    </div>
+  </section>
+
+  <!-- 13. LOS 4 OFICIOS TRADICIONALES DE TALLER -->
+  <section class="craft-trades-section" id="oficios">
+    <div class="container">
+      <div class="sec-header">
+        <div>
+          <h2 class="sec-title">Cuatro oficios, un taller</h2>
+          <p class="sec-subtitle">La convivencia de disciplinas artesanales bajo el mismo techo productivo.</p>
+        </div>
+      </div>
+
+      <div class="trades-grid">
+        <div class="trade-card">
+          <h3 class="trade-name">Ebanistería de Ensamble</h3>
+          <p class="trade-text">Caja y espiga, colas de milano y pasadores cónicos de madera. Uniones mecánicas puras sin tornillería visible.</p>
+        </div>
+
+        <div class="trade-card">
+          <h3 class="trade-name">Torno Alfarero de Pie</h3>
+          <p class="trade-text">Levantamiento manual pieza a pieza en plato giratorio tradicional. Cada cuenco y taza conserva las huellas del artesano.</p>
+        </div>
+
+        <div class="trade-card">
+          <h3 class="trade-name">Orfebrería & Mecanizado</h3>
+          <p class="trade-text">Rótulas, vástagos y arandelas ajustadas en banco de ajuste con pasta de pulir natural para un brillo mate y sedoso.</p>
+        </div>
+
+        <div class="trade-card">
+          <h3 class="trade-name">Tapicería con Cincha de Yute</h3>
+          <p class="trade-text">Montaje tradicional sobre bastidor con cincha vegetal tensada a mano, crin vegetal y acolchado de lana libre de espumas plásticas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14. PROGRAMA TRADE PARA ARQUITECTOS, INTERIORISTAS & CAFETERÍAS -->
+  <section class="trade-program-section" id="programa-trade">
+    <div class="container">
+      <div class="trade-banner-box">
+        <div class="trade-copy-side">
+          <h2 class="trade-title">También trabajamos contigo</h2>
+          <p class="trade-desc">
+            Acompañamos a estudios de arquitectura, hoteles y cafeterías de especialidad con tarifas comerciales exclusivas y soporte técnico directo.
+          </p>
+
+          <div class="trade-benefits-list">
+            <div class="benefit-item">
+              <span class="benefit-check" aria-hidden="true">—</span>
+              <span><strong>Descuentos comerciales Trade & Wholesale:</strong> Tarifas escalonadas de hasta el 25% según volumen.</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-check" aria-hidden="true">—</span>
+              <span><strong>Caja de Muestras en 48 hrs:</strong> Bloques de roble, probetas de latón y muestras cerámicas enviadas a tu estudio.</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-check" aria-hidden="true">—</span>
+              <span><strong>Archivos 3D y BIM Completos:</strong> Modelos Revit, Rhino 3DM, SketchUp y OBJ de todas las piezas.</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-check" aria-hidden="true">—</span>
+              <span><strong>Grabado de Marca & Personalización:</strong> Sello en la base de tazas y adaptación dimensional de mesas.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="trade-action-card">
+          <h4 class="card-callout-title">Solicitar Alta en Programa Trade</h4>
+          <p class="card-callout-desc">Envía los datos de tu despacho o cafetería para acceder a la tarifa comercial 2026 y solicitar tu caja de muestras.</p>
+          <a href="#contacto-taller" class="btn btn-primary btn-full">Solicitar Acceso Trade →</a>
+          <span class="card-callout-note">Respuesta personalizada en menos de 24 horas laborables.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15. PREGUNTAS FRECUENTES (FAQ ACORDEÓN AUTO-CERRANTE) -->
+  <section class="faq-section" id="preguntas-frecuentes">
+    <div class="container">
+      <div class="sec-header text-center">
+        <div>
+          <h2 class="sec-title">Antes de elegir</h2>
+          <p class="sec-subtitle">Todo lo que necesitas saber sobre mantenimiento, cuidados, envíos seguros y compras al mayoreo.</p>
+        </div>
+      </div>
+
+      <ProductFaq />
+    </div>
+  </section>
+
+  <!-- 16. CITA EN SHOWROOM GUADALAJARA & FORMULARIO INTERACTIVO -->
+  <section class="showroom-contact-section" id="contacto-taller">
+    <div class="container">
+      <div class="contact-header-block text-center">
+        <div class="friendly-pill" style="margin-bottom: 1rem;">
+          <span class="dot"></span>
+          <span>SHOWROOM · GUADALAJARA</span>
+        </div>
+        <h2 class="sec-title">Ven a conocer las piezas</h2>
+        <p class="sec-subtitle">
+          Recibimos a arquitectos, clientes particulares y baristas en nuestro espacio de exhibición en la Colonia Americana, Guadalajara.
+        </p>
+      </div>
+
+      <div class="contact-layout-split">
+        <div class="form-container-side">
+          <EnquiryForm reference="DEMO-PLIEGUE-01" item="Lámpara Pliegue" acabado="Roble Blanco y Latón" />
+        </div>
+
+        <div class="showroom-info-side">
+          <div class="atelier-location-card">
+            <div class="location-header-row">
+              <h3 class="location-name">Atelier & Showroom Guadalajara</h3>
+              <span class="friendly-pill"><span class="dot"></span> Citas Activas</span>
+            </div>
+            <p class="location-address">Calle Libertad 1420<br/>Col. Americana, 44160 Guadalajara, Jalisco</p>
+            <p class="location-phone">+52 (33) 3810-7422</p>
+            <span class="location-hours">Lunes a Viernes · 10:00 — 18:00 hrs · Con cita previa</span>
+          </div>
+
+          <div class="sample-box-card">
+            <span class="sample-badge">SERVICIO DE MUESTRAS EN 48 HRS</span>
+            <h4 class="sample-title">Caja de Muestras Táctiles</h4>
+            <p class="sample-text">Incluye probetas de roble macizo con acabados de cera vegetal, muestra de latón natural patinado y azulejos de gres con los 4 esmaltes minerales para evaluar bajo la luz de tu obra.</p>
+            <span class="sample-note">Envío sin costo a despachos de arquitectura en toda la República Mexicana.</span>
+          </div>
+
+          <div class="direct-contact-pill">
+            <span>Consultas directas con dirección de taller:</span>
+            <a href="mailto:hola@atelierpliegue.mx" class="direct-mail-link">hola@atelierpliegue.mx</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+</BaseLayout>
+
+<style>
+  /* ----------------------------------------------------
+     1. HERO CON COMPOSICIÓN MULTI-IMAGEN / TRIPTYCH
+     ---------------------------------------------------- */
+  .pliegue-hero {
+    padding: clamp(3rem, 6vw, 6rem) 0 clamp(4rem, 8vw, 7rem);
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-primary);
+    position: relative;
+  }
+
+  .hero-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 960px) {
+    .hero-layout {
+      grid-template-columns: 1.2fr 1fr;
+      gap: 5rem;
+    }
+  }
+
+  .hero-eyebrow-container {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.75rem;
+  }
+
+  .hero-atelier-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.85rem;
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    font-family: var(--font-mono);
+    font-size: 0.725rem;
+    letter-spacing: 0.06em;
+    color: var(--color-text-secondary);
+  }
+
+  .atelier-name {
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+
+  .tag-divider {
+    color: var(--color-border);
+    opacity: 0.8;
+  }
+
+  .atelier-meta {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--color-accent);
+    border-radius: 50%;
+    animation: pulseDot 2s infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+  }
+
+  .hero-rating-clean {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .star-glyph {
+    color: var(--color-accent);
+    font-size: 0.9rem;
+  }
+
+  .rating-num {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+
+  .rating-desc {
+    font-size: 0.775rem;
+    color: var(--color-text-muted);
+  }
+
+  .hero-h1 {
+    font-family: var(--font-serif);
+    color: var(--color-text-primary);
+    margin-bottom: 1.5rem;
+    font-size: clamp(2.75rem, 4.8vw, 4.3rem);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    font-weight: 400;
+    max-width: 19ch;
+  }
+
+  .h1-accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-accent);
+    white-space: nowrap;
+  }
+
+  .hero-lead {
+    font-size: clamp(1.025rem, 1.4vw, 1.175rem);
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+    margin-bottom: 2.25rem;
+    max-width: 560px;
+  }
+
+  .hero-actions-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-buttons-pair {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .hero-btn-main {
+    padding: 0.95rem 2rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+
+  .btn-arrow {
+    transition: transform 0.2s ease;
+  }
+
+  .hero-btn-main:hover .btn-arrow {
+    transform: translateX(4px);
+  }
+
+  .hero-btn-sub {
+    padding: 0.95rem 1.85rem;
+    font-size: 0.85rem;
+  }
+
+  .hero-quick-links {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    font-size: 0.775rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .quick-label {
+    letter-spacing: 0.06em;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+  }
+
+  .quick-jump {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color var(--transition-fast);
+  }
+
+  .quick-jump:hover {
+    color: var(--color-text-primary);
+  }
+
+  .quick-sep {
+    color: var(--color-border);
+  }
+
+  .hero-specs-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 640px) {
+    .hero-specs-row {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .h-spec {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .h-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .h-val {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  /* Triptych & Floating Subcards */
+  .hero-showcase {
+    position: relative;
+  }
+
+  .hero-triptych {
+    position: relative;
+    padding-bottom: 3.5rem;
+  }
+
+  .triptych-main-card {
+    position: relative;
+    border-radius: var(--radius-xs);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+  }
+
+  .hero-product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .triptych-main-card:hover .hero-product-img {
+    transform: scale(1.03);
+  }
+
+  .showcase-badge {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(to top, rgba(20, 20, 18, 0.9) 0%, rgba(20, 20, 18, 0) 100%);
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .badge-title {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    display: block;
+  }
+
+  .badge-cat {
+    color: var(--color-accent-light, #E8D5B5);
+    font-size: 0.725rem;
+  }
+
+  .badge-dim {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Floating Subcards */
+  .triptych-subcard {
+    position: absolute;
+    width: 155px;
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    transition: transform 0.4s ease;
+    z-index: 2;
+  }
+
+  @media (min-width: 640px) {
+    .triptych-subcard {
+      width: 180px;
+    }
+  }
+
+  .triptych-subcard:hover {
+    transform: translateY(-5px);
+  }
+
+  .subcard-left {
+    bottom: -1rem;
+    left: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .subcard-left {
+      bottom: 0;
+      left: -1rem;
+    }
+  }
+
+  @media (min-width: 960px) {
+    .subcard-left {
+      left: -2.5rem;
+    }
+  }
+
+  .subcard-right {
+    bottom: 0.5rem;
+    right: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .subcard-right {
+      bottom: 1.5rem;
+      right: -1rem;
+    }
+  }
+
+  @media (min-width: 960px) {
+    .subcard-right {
+      right: -2rem;
+    }
+  }
+
+  .subcard-thumb {
+    width: 100%;
+    height: 95px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .subcard-info {
+    padding: 0.5rem 0.65rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .subcard-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .subcard-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--color-accent);
+  }
+
+  /* ----------------------------------------------------
+     2. MARQUEE CONTINUO
+     ---------------------------------------------------- */
+  .craft-ticker-section {
+    background-color: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--color-border);
+    overflow: hidden;
+    padding: 0.85rem 0;
+    user-select: none;
+  }
+
+  .craft-ticker-track {
+    display: flex;
+    width: max-content;
+    animation: craftMarquee 38s linear infinite;
+  }
+
+  .craft-ticker-track:hover {
+    animation-play-state: paused;
+  }
+
+  .craft-ticker-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-right: 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+  }
+
+  .ticker-sep {
+    color: var(--color-accent);
+    font-size: 0.65rem;
+  }
+
+  @keyframes craftMarquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ----------------------------------------------------
+     3. MANIFIESTO
+     ---------------------------------------------------- */
+  .manifesto-section {
+    padding: clamp(4.5rem, 9vw, 8rem) 0;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-primary);
+  }
+
+  .manifesto-quote {
+    font-family: var(--font-serif);
+    font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+    line-height: 1.45;
+    color: var(--color-text-primary);
+    margin: 1.5rem auto 2.5rem;
+    max-width: 820px;
+    font-style: italic;
+    text-align: center;
+  }
+
+  .manifesto-author {
+    margin-bottom: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .author-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-text-primary);
+  }
+
+  .author-sub {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent);
+  }
+
+  .manifesto-triad {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .manifesto-triad {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+  }
+
+  .triad-item {
+    background-color: var(--color-bg-secondary);
+    padding: 2.25rem 1.75rem;
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: transform var(--transition-normal), border-color var(--transition-normal);
+  }
+
+  .triad-item:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+  }
+
+  .triad-num {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    color: var(--color-accent);
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .triad-title {
+    font-size: 1.15rem;
+    color: var(--color-text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .triad-desc {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ----------------------------------------------------
+     4. MÉTRICAS
+     ---------------------------------------------------- */
+  .metrics-section {
+    padding: clamp(4rem, 7vw, 6.5rem) 0;
+    background-color: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .metrics-header {
+    margin-bottom: 3rem;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .metrics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .metrics-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .metric-box {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    padding: 2.25rem 1.75rem;
+    border-radius: var(--radius-xs);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .metric-val {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 3.8vw, 3.5rem);
+    font-weight: 400;
+    color: var(--color-text-primary);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .metric-unit {
+    font-size: 1.25rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+  }
+
+  .metric-lbl {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .metric-txt {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    margin-top: auto;
+  }
+
+  /* ----------------------------------------------------
+     5. COLECCIONES
+     ---------------------------------------------------- */
+  .collections-overview-section {
+    padding: clamp(4.5rem, 8vw, 7.5rem) 0;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-primary);
+  }
+
+  .sec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .sec-title {
+    font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+    color: var(--color-text-primary);
+    margin: 0.35rem 0 0.5rem;
+  }
+
+  .sec-subtitle {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    max-width: 620px;
+    line-height: 1.55;
+  }
+
+  .collections-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .collections-cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem;
+    }
+  }
+
+  .collection-overview-card {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition-normal), border-color var(--transition-normal);
+  }
+
+  .collection-overview-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-accent);
+  }
+
+  .col-img-frame {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+
+  .col-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .collection-overview-card:hover .col-img {
+    transform: scale(1.05);
+  }
+
+  .col-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(20, 20, 18, 0.7) 0%, transparent 60%);
+    display: flex;
+    align-items: flex-end;
+    padding: 1.5rem;
+  }
+
+  .col-badge {
+    color: #FFFFFF;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    background-color: rgba(26, 26, 24, 0.8);
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-xs);
+    backdrop-filter: blur(4px);
+  }
+
+  .col-info {
+    padding: 1.75rem;
+  }
+
+  .col-name {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+    margin: 0.35rem 0 0.5rem;
+  }
+
+  .col-sub {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  /* ----------------------------------------------------
+     6. CATÁLOGO
+     ---------------------------------------------------- */
+  .featured-catalog-section {
+    padding: clamp(4.5rem, 8vw, 7.5rem) 0;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .products-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .products-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* ----------------------------------------------------
+     7. PALETA CERÁMICA (ACME CUPS STYLE)
+     ---------------------------------------------------- */
+  .ceramic-palette-section {
+    padding: clamp(4.5rem, 8vw, 7.5rem) 0;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-primary);
+  }
+
+  /* ----------------------------------------------------
+     8. DESPIECE TÉCNICO
+     ---------------------------------------------------- */
+  .exploded-section {
+    padding: clamp(4.5rem, 8vw, 7.5rem) 0;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+  }
+
+  /* ----------------------------------------------------
+     9. LOOKBOOK
+     ---------------------------------------------------- */
+  .lookbook-section {
+    padding: clamp(4.5rem, 8vw, 7.5rem) 0;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-primary);
+  }
+
+  .lookbook-masonry {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .lookbook-masonry {
+      grid-template-columns: repeat(12, 1fr);
+      gap: 2.5rem;
+    }
+
+    .lookbook-item.item-large {
+      grid-column: span 6;
+    }
+
+    .lookbook-item.item-portrait {
+      grid-column: span 6;
+    }
+
+    .lookbook-item.item-landscape {
+      grid-column: span 12;
+    }
+  }
+
+  .lookbook-item {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .lookbook-img-frame {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+
+  .lookbook-item.item-landscape .lookbook-img-frame {
+    aspect-ratio: 21 / 9;
+  }
+
+  .lookbook-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s ease;
+  }
+
+  .lookbook-item:hover .lookbook-img {
+    transform: scale(1.03);
+  }
+
+  .lookbook-meta {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .look-title {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    color: var(--color-text-primary);
+  }
+
+  .look-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+  }
+
+  /* ----------------------------------------------------
+     10. LABORATORIO DE MATERIAS
+     ---------------------------------------------------- */
+  .raw-materials-section {
+    padding: clamp(4.5rem, 8vw, 7.5rem) 0;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+  }
+
+  /* ----------------------------------------------------
+     11. OFICIO EN EL ATELIER
+     ---------------------------------------------------- */
+  .atelier-craft-section {
+    padding: clamp(4.5rem, 8vw, 7.5rem) 0;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-primary);
+  }
+
+  /* ----------------------------------------------------
+     12. RESEÑAS & COMUNIDAD
+     ---------------------------------------------------- */
+  .reviews-section {
+    padding: clamp(4.5rem, 8vw, 7.5rem) 0;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+  }
+
+  /* ----------------------------------------------------
+     13. LOS CUATRO OFICIOS
+     ---------------------------------------------------- */
+  .craft-trades-section {
+    padding: clamp(4.5rem, 8vw, 7.5rem) 0;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-primary);
+  }
+
+  .trades-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .trades-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .trades-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .trade-card {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    padding: 2.25rem 1.75rem;
+    border-radius: var(--radius-xs);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 0.75rem;
+    transition: transform var(--transition-normal), border-color var(--transition-normal);
+  }
+
+  .trade-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+  }
+
+  .trade-num {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-accent);
+    letter-spacing: 0.1em;
+  }
+
+  .trade-name {
+    font-size: 1.15rem;
+    color: var(--color-text-primary);
+  }
+
+  .trade-text {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    flex: 1;
+  }
+
+  /* ----------------------------------------------------
+     14. PROGRAMA TRADE
+     ---------------------------------------------------- */
+  .trade-program-section {
+    padding: clamp(4.5rem, 8vw, 7.5rem) 0;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+  }
+
+  .trade-banner-box {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    padding: clamp(2.5rem, 5vw, 4.5rem);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 960px) {
+    .trade-banner-box {
+      grid-template-columns: 1.4fr 1fr;
+      gap: 5rem;
+    }
+  }
+
+  .trade-title {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    color: var(--color-text-primary);
+    margin: 0.5rem 0 1.25rem;
+  }
+
+  .trade-desc {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .trade-benefits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .benefit-check {
+    color: var(--color-accent);
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+  }
+
+  .trade-action-card {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    padding: 2.25rem 2rem;
+    border-radius: var(--radius-xs);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .card-callout-title {
+    font-size: 1.2rem;
+    color: var(--color-text-primary);
+  }
+
+  .card-callout-desc {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .card-callout-note {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+
+  /* ----------------------------------------------------
+     15. FAQ SECTION
+     ---------------------------------------------------- */
+  .faq-section {
+    padding: clamp(4.5rem, 8vw, 7.5rem) 0;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-primary);
+  }
+
+  /* ----------------------------------------------------
+     16. SHOWROOM & CONTACTO
+     ---------------------------------------------------- */
+  .showroom-contact-section {
+    padding: clamp(4.5rem, 8vw, 7.5rem) 0;
+    background-color: var(--color-bg-secondary);
+  }
+
+  .contact-header-block {
+    max-width: 780px;
+    margin: 0 auto 3.5rem;
+  }
+
+  .contact-layout-split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  @media (min-width: 960px) {
+    .contact-layout-split {
+      grid-template-columns: 1.35fr 1fr;
+      gap: 4.5rem;
+    }
+  }
+
+  .showroom-info-side {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .atelier-location-card {
+    background-color: var(--color-bg-card);
+    padding: 2rem;
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--color-border);
+  }
+
+  .location-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .location-name {
+    font-size: 1.15rem;
+    color: var(--color-text-primary);
+  }
+
+  .location-address {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+
+  .location-phone {
+    font-family: var(--font-mono);
+    font-size: 0.825rem;
+    color: var(--color-accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .location-hours {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    display: block;
+  }
+
+  .sample-box-card {
+    background-color: var(--color-bg-card);
+    border: 1px dashed var(--color-border);
+    padding: 2rem;
+    border-radius: var(--radius-xs);
+  }
+
+  .sample-badge {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-accent);
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .sample-title {
+    font-size: 1.05rem;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .sample-text {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    margin-bottom: 0.75rem;
+  }
+
+  .sample-note {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    display: block;
+  }
+
+  .direct-contact-pill {
+    padding: 1.25rem;
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    font-size: 0.825rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .direct-mail-link {
+    font-weight: 600;
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .btn-full {
+    width: 100%;
+    text-align: center;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .block {
+    display: block;
+  }
+</style>

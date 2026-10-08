@@ -1,0 +1,36 @@
+{
+  "name": "Silla Duna",
+  "collection": "coleccion-tierra",
+  "category": "Asientos",
+  "description": "Silla de comedor ergonómica con respaldo envolvente curvado en vapor y asiento tapizado en lino grueso belga. Su ligereza formal contrasta con su robustez estructural.",
+  "materials": ["Madera maciza de fresno", "Tapicería de lino 100% natural", "Espuma de alta resiliencia"],
+  "dimensions": "52 × 54 × 78 cm · Altura de asiento 46 cm",
+  "leadTime": "4 a 5 semanas",
+  "images": [
+    {
+      "src": "https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Silla Duna de madera con tapizado claro"
+    }
+  ],
+  "variants": [
+    {
+      "id": "lino-arena",
+      "name": "Fresno & Lino Arena",
+      "finish": "Madera clara con textil crudo",
+      "image": "https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&w=1200&q=80",
+      "colorHex": "#E6DFD5"
+    },
+    {
+      "id": "lino-oliva",
+      "name": "Fresno & Lino Oliva",
+      "finish": "Madera clara con textil verde seco",
+      "image": "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=1200&q=80",
+      "colorHex": "#5E6351"
+    }
+  ],
+  "enquiry": {
+    "label": "Consultar set de sillas",
+    "reference": "DEMO-PLIEGUE-04"
+  },
+  "featured": true
+}

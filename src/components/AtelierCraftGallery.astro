@@ -1,0 +1,199 @@
+---
+// AtelierCraftGallery.astro
+// Vida de Taller & Procesos Artesanales de Atelier Pliegue
+// Inspirado en la cercanía y oficio de Acme Cups y Wiemer.store
+---
+
+<div class="atelier-mosaic">
+  <!-- Escena 1: El Torno Alfarero de Pie -->
+  <div class="mosaic-item item-large photo-reveal" tabindex="0">
+    <div class="mosaic-img-frame">
+      <img 
+        src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=1200&q=80" 
+        alt="Maestro alfarero torneando cuenco y taza en torno de pie"
+        class="mosaic-img"
+        loading="lazy"
+      />
+      <div class="mosaic-pill">
+        <span class="pill-dot"></span>
+        <span>OFICIO 01 · TORNO ALFARERO</span>
+      </div>
+      <div class="mosaic-caption">
+        <h4 class="caption-title">Modelado en Plato Giratorio 1:1</h4>
+        <p class="caption-desc">Cada taza y jarrón conserva la huella dactilar del alfarero. No utilizamos moldes de prensado industrial por inyección.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Escena 2: Ebanistería y Cepillado de Roble -->
+  <div class="mosaic-item photo-reveal" tabindex="0">
+    <div class="mosaic-img-frame">
+      <img 
+        src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" 
+        alt="Cepillado manual de vigas de roble blanco y virutas de madera"
+        class="mosaic-img"
+        loading="lazy"
+      />
+      <div class="mosaic-pill">
+        <span class="pill-dot"></span>
+        <span>OFICIO 02 · EBANISTERÍA</span>
+      </div>
+      <div class="mosaic-caption">
+        <h4 class="caption-title">Ajuste de Ensambles & Cola de Milano</h4>
+        <p class="caption-desc">Uniones mecánicas de madera con tolerancia manual de ±0.2 mm sin adhesivos plásticos.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Escena 3: Torneado de Latón y Orfebrería -->
+  <div class="mosaic-item photo-reveal" tabindex="0">
+    <div class="mosaic-img-frame">
+      <img 
+        src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80" 
+        alt="Torno mecánico torneando rótula y piezas de latón macizo"
+        class="mosaic-img"
+        loading="lazy"
+      />
+      <div class="mosaic-pill">
+        <span class="pill-dot"></span>
+        <span>OFICIO 03 · ORFEBRERÍA</span>
+      </div>
+      <div class="mosaic-caption">
+        <h4 class="caption-title">Mecanizado de Barra Maciza Cu-Zn</h4>
+        <p class="caption-desc">Piezas de contacto continuo pulidas con pastas botánicas para un tacto mineral satinado.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Escena 4: Cocción Lenta en Horno de Gas -->
+  <div class="mosaic-item item-alt-large photo-reveal" tabindex="0">
+    <div class="mosaic-img-frame">
+      <img 
+        src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=1200&q=80" 
+        alt="Horno cerámico y piezas de gres tras cocción de 48 horas"
+        class="mosaic-img"
+        loading="lazy"
+      />
+      <div class="mosaic-pill">
+        <span class="pill-dot"></span>
+        <span>OFICIO 04 · HORNO 1,280 °C</span>
+      </div>
+      <div class="mosaic-caption">
+        <h4 class="caption-title">Cocción en Atmósfera Reductora</h4>
+        <p class="caption-desc">Ciclos térmicos de 48 horas que funden los esmaltes minerales con el cuerpo cerámico hasta la vitrificación completa.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .atelier-mosaic {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .atelier-mosaic {
+      grid-template-columns: repeat(12, 1fr);
+      gap: 2rem;
+    }
+
+    .item-large {
+      grid-column: span 7;
+    }
+
+    .item-alt-large {
+      grid-column: span 7;
+    }
+
+    .mosaic-item:not(.item-large):not(.item-alt-large) {
+      grid-column: span 5;
+    }
+  }
+
+  .mosaic-item {
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-xs);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mosaic-img-frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .mosaic-img-frame {
+      min-height: 380px;
+    }
+  }
+
+  .mosaic-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mosaic-item:hover .mosaic-img {
+    transform: scale(1.04);
+  }
+
+  .mosaic-pill {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.75rem;
+    background-color: rgba(26, 26, 24, 0.85);
+    color: #FFFFFF;
+    border-radius: var(--radius-full);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    backdrop-filter: blur(6px);
+  }
+
+  .pill-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--color-accent);
+    border-radius: 50%;
+  }
+
+  .mosaic-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(20, 20, 18, 0.9) 0%, rgba(20, 20, 18, 0) 100%);
+    color: #FFFFFF;
+  }
+
+  .caption-title {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    margin-bottom: 0.35rem;
+    color: #FFFFFF;
+  }
+
+  .caption-desc {
+    font-size: 0.825rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
+    max-width: 580px;
+  }
+</style>

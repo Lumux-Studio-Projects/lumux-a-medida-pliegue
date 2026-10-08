@@ -1,0 +1,326 @@
+---
+// CeramicColorSelector.astro
+// Paleta de Esmaltes Minerales & Gama Cromática de Taller
+// Inspirado en la gama cromática de tazas de Acme Cups (Feijoa, Kokako, Roman, Milk)
+---
+
+<div class="ceramic-glaze-showcase" id="ceramicGlazeShowcase">
+  <div class="glaze-layout">
+    <div class="glaze-preview-card">
+      <div class="glaze-img-wrap">
+        <img 
+          id="glazeMainImg"
+          src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1200&q=80" 
+          alt="Taza cerámica esmalte Feijoa Verde Mineral"
+          class="glaze-img"
+        />
+        <div class="glaze-badge-tag">
+          <span id="glazeActiveName">FEIJOA VERDE MINERAL</span>
+          <span class="glaze-temp">1,280 °C</span>
+        </div>
+      </div>
+      <div class="glaze-meta-strip">
+        <div>
+          <span class="glaze-label tag-meta">ACABADO TÁCTIL</span>
+          <span class="glaze-val" id="glazeActiveFinish">Satinado sedoso de micro-cristalización</span>
+        </div>
+        <div>
+          <span class="glaze-label tag-meta">USO RECOMENDADO</span>
+          <span class="glaze-val">Café de especialidad, té & vajilla diaria</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="glaze-selector-panel">
+      <div class="selector-header">
+        <span class="tag-meta">Esmaltes Botánicos y Minerales</span>
+        <h3 class="selector-title">El Color del Barro Cocido</h3>
+        <p class="selector-desc">
+          Fórmulas propias desarrolladas en taller con óxidos naturales de hierro, cobalto, cobre y cenizas de madera. Libre de plomo y metales pesados.
+        </p>
+      </div>
+
+      <div class="glaze-swatches-grid">
+        <!-- Swatch 1: Feijoa Verde Mineral -->
+        <button 
+          type="button" 
+          class="swatch-btn active"
+          data-name="FEIJOA VERDE MINERAL"
+          data-finish="Satinado sedoso de micro-cristalización mineral"
+          data-img="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1200&q=80"
+          aria-label="Seleccionar esmalte Feijoa Verde Mineral"
+        >
+          <span class="swatch-circle" style="background-color: #4A6B53;"></span>
+          <div class="swatch-text">
+            <span class="swatch-name">Feijoa Verde</span>
+            <span class="swatch-spec">Óxido de cobre y ceniza vegetal</span>
+          </div>
+        </button>
+
+        <!-- Swatch 2: Ocre Terracota -->
+        <button 
+          type="button" 
+          class="swatch-btn"
+          data-name="OCRE TERRACOTA"
+          data-finish="Tacto rugoso natural con brillo mate"
+          data-img="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=1200&q=80"
+          aria-label="Seleccionar esmalte Ocre Terracota"
+        >
+          <span class="swatch-circle" style="background-color: #A85A3C;"></span>
+          <div class="swatch-text">
+            <span class="swatch-name">Ocre Terracota</span>
+            <span class="swatch-spec">Arcilla ferruginosa cocida a llama</span>
+          </div>
+        </button>
+
+        <!-- Swatch 3: Crema Cruda de Cuarzo -->
+        <button 
+          type="button" 
+          class="swatch-btn"
+          data-name="CREMA CRUDA DE CUARZO"
+          data-finish="Esmalte lechoso mate cálido"
+          data-img="https://images.unsplash.com/photo-1577937927133-66ef06acdf18?auto=format&fit=crop&w=1200&q=80"
+          aria-label="Seleccionar esmalte Crema Cruda de Cuarzo"
+        >
+          <span class="swatch-circle" style="background-color: #E8E0D2; border: 1px solid #D1C7B7;"></span>
+          <div class="swatch-text">
+            <span class="swatch-name">Crema Cruda</span>
+            <span class="swatch-spec">Feldespato potásico y cuarzo blanco</span>
+          </div>
+        </button>
+
+        <!-- Swatch 4: Ceniza Carbón -->
+        <button 
+          type="button" 
+          class="swatch-btn"
+          data-name="CENIZA DE CARBÓN"
+          data-finish="Negro mineral mate profundo antideslumbrante"
+          data-img="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1200&q=80"
+          aria-label="Seleccionar esmalte Ceniza de Carbón"
+        >
+          <span class="swatch-circle" style="background-color: #2C2D30;"></span>
+          <div class="swatch-text">
+            <span class="swatch-name">Ceniza Carbón</span>
+            <span class="swatch-spec">Óxido de manganeso e hierro</span>
+          </div>
+        </button>
+      </div>
+
+      <div class="glaze-guarantee-box">
+        <span class="guarantee-icon">☕</span>
+        <div>
+          <span class="guarantee-title">Garantía de Uso Diario Comercial & Hogar</span>
+          <p class="guarantee-desc">Nuestras tazas y piezas cerámicas son utilizadas en más de 25 cafeterías de especialidad. No absorben olores ni retienen manchas de café.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  if (typeof window !== 'undefined') {
+    const swatches = document.querySelectorAll('.swatch-btn');
+    const mainImg = document.getElementById('glazeMainImg') as HTMLImageElement;
+    const activeName = document.getElementById('glazeActiveName');
+    const activeFinish = document.getElementById('glazeActiveFinish');
+
+    swatches.forEach(btn => {
+      btn.addEventListener('click', () => {
+        swatches.forEach(s => s.classList.remove('active'));
+        btn.classList.add('active');
+
+        const name = btn.getAttribute('data-name');
+        const finish = btn.getAttribute('data-finish');
+        const img = btn.getAttribute('data-img');
+
+        if (activeName && name) activeName.textContent = name;
+        if (activeFinish && finish) activeFinish.textContent = finish;
+        if (mainImg && img) mainImg.src = img;
+      });
+    });
+  }
+</script>
+
+<style>
+  .ceramic-glaze-showcase {
+    margin-top: 2rem;
+  }
+
+  .glaze-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 960px) {
+    .glaze-layout {
+      grid-template-columns: 1fr 1.15fr;
+      gap: 4.5rem;
+    }
+  }
+
+  .glaze-preview-card {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  .glaze-img-wrap {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .glaze-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.3s ease;
+  }
+
+  .glaze-badge-tag {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(26, 26, 24, 0.88);
+    color: #FFFFFF;
+    padding: 0.5rem 0.85rem;
+    border-radius: var(--radius-xs);
+    font-family: var(--font-mono);
+    font-size: 0.725rem;
+    letter-spacing: 0.06em;
+    backdrop-filter: blur(6px);
+  }
+
+  .glaze-temp {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .glaze-meta-strip {
+    padding: 1.25rem 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .glaze-label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.6875rem;
+  }
+
+  .glaze-val {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  .selector-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    color: var(--color-text-primary);
+    margin: 0.5rem 0 1rem;
+  }
+
+  .selector-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .glaze-swatches-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-bottom: 2rem;
+  }
+
+  .swatch-btn {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-card);
+    cursor: pointer;
+    text-align: left;
+    transition: all var(--transition-fast);
+  }
+
+  .swatch-btn:hover {
+    border-color: var(--color-text-primary);
+    background-color: var(--color-bg-secondary);
+  }
+
+  .swatch-btn.active {
+    border-color: var(--color-accent);
+    background-color: var(--color-bg-secondary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .swatch-circle {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  .swatch-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .swatch-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .swatch-spec {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .glaze-guarantee-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+    background-color: var(--color-bg-secondary);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-xs);
+  }
+
+  .guarantee-icon {
+    font-size: 1.5rem;
+  }
+
+  .guarantee-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .guarantee-desc {
+    font-size: 0.825rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+</style>

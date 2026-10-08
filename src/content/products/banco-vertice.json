@@ -1,0 +1,36 @@
+{
+  "name": "Banco Vértice",
+  "collection": "coleccion-tierra",
+  "category": "Asientos",
+  "description": "Banco auxiliar bajo o mesa de centro monolítica labrada en bloque macizo de madera de tzalam. Sus aristas biseladas y hendiduras talladas facilitan su desplazamiento y ofrecen un soporte visual contundente.",
+  "materials": ["Madera de tzalam macizo de tala sustentable", "Aceite vegetal endurecedor"],
+  "dimensions": "120 × 38 × 42 cm · Peso 26 kg",
+  "leadTime": "3 a 4 semanas",
+  "images": [
+    {
+      "src": "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Banco auxiliar de madera sólida junto a muro blanco"
+    }
+  ],
+  "variants": [
+    {
+      "id": "tzalam-natural",
+      "name": "Tzalam Natural",
+      "finish": "Veta rojiza natural",
+      "image": "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1200&q=80",
+      "colorHex": "#855C47"
+    },
+    {
+      "id": "tzalam-carbonizado",
+      "name": "Tzalam Shou Sugi Ban",
+      "finish": "Técnica de quemado superficial japonés",
+      "image": "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1200&q=80",
+      "colorHex": "#22201D"
+    }
+  ],
+  "enquiry": {
+    "label": "Consultar este banco",
+    "reference": "DEMO-PLIEGUE-06"
+  },
+  "featured": false
+}

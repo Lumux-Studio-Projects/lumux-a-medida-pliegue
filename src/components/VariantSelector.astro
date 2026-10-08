@@ -1,0 +1,201 @@
+---
+interface Variant {
+  id: string;
+  name: string;
+  finish: string;
+  image: string;
+  colorHex: string;
+}
+
+interface Props {
+  variants: Variant[];
+  productName: string;
+  reference: string;
+}
+
+const { variants, productName, reference } = Astro.props;
+const defaultVariant = variants[0];
+---
+
+<div class="variant-selector-module" id="variantSelectorRoot">
+  <div class="variant-header-row">
+    <span class="tag-meta">Acabado y Material:</span>
+    <span class="active-variant-name" id="selectedVariantName">{defaultVariant.name}</span>
+  </div>
+
+  <p class="active-variant-finish" id="selectedVariantFinish">{defaultVariant.finish}</p>
+
+  <!-- Botones de muestra interactivos -->
+  <div class="swatches-row" role="radiogroup" aria-label="Seleccionar acabado">
+    {variants.map((v, index) => (
+      <button 
+        type="button" 
+        class:list={['swatch-choice-btn', { active: index === 0 }]}
+        data-variant-id={v.id}
+        data-variant-name={v.name}
+        data-variant-finish={v.finish}
+        data-variant-img={v.image}
+        role="radio"
+        aria-checked={index === 0 ? "true" : "false"}
+        title={v.name}
+      >
+        <span class="swatch-bubble" style={`background-color: ${v.colorHex};`}></span>
+        <span class="swatch-label-text">{v.name}</span>
+      </button>
+    ))}
+  </div>
+
+  <!-- Botón de consulta contextual conectado -->
+  <div class="enquiry-cta-box">
+    <a 
+      href={`/contacto?ref=${reference}&item=${encodeURIComponent(productName)}&acabado=${encodeURIComponent(defaultVariant.name)}`}
+      class="btn btn-primary btn-enquiry" 
+      id="enquiryActionBtn"
+    >
+      Consultar esta pieza ({reference}) →
+    </a>
+    <span class="enquiry-helper-note">
+      Los pedidos se gestionan mediante cotización y factura directa con el taller.
+    </span>
+  </div>
+</div>
+
+<style>
+  .variant-selector-module {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .variant-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .active-variant-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .active-variant-finish {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    margin-top: -0.5rem;
+  }
+
+  .swatches-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin: 0.5rem 0;
+  }
+
+  .swatch-choice-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    padding: 0.65rem 1rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .swatch-choice-btn:hover {
+    border-color: var(--color-text-primary);
+  }
+
+  .swatch-choice-btn.active {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 1px var(--color-accent);
+  }
+
+  .swatch-bubble {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .swatch-label-text {
+    font-size: 0.8125rem;
+    color: var(--color-text-primary);
+    font-weight: 500;
+  }
+
+  .enquiry-cta-box {
+    border-top: 1px solid var(--color-border-light);
+    padding-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .btn-enquiry {
+    width: 100%;
+    text-align: center;
+  }
+
+  .enquiry-helper-note {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const root = document.getElementById('variantSelectorRoot');
+    const mainProductImg = document.getElementById('mainProductImage');
+    const nameEl = document.getElementById('selectedVariantName');
+    const finishEl = document.getElementById('selectedVariantFinish');
+    const ctaBtn = document.getElementById('enquiryActionBtn');
+
+    if (!root) return;
+
+    const swatchBtns = root.querySelectorAll('.swatch-choice-btn');
+
+    swatchBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        swatchBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+
+        const vName = btn.getAttribute('data-variant-name');
+        const vFinish = btn.getAttribute('data-variant-finish');
+        const vImg = btn.getAttribute('data-variant-img');
+
+        if (nameEl) nameEl.textContent = vName;
+        if (finishEl) finishEl.textContent = vFinish;
+
+        // Actualizar imagen principal si procede
+        if (mainProductImg && vImg) {
+          mainProductImg.style.opacity = '0.4';
+          setTimeout(() => {
+            mainProductImg.src = vImg;
+            mainProductImg.style.opacity = '1';
+          }, 150);
+        }
+
+        // Actualizar URL del botón de consulta conservando el nuevo acabado
+        if (ctaBtn) {
+          const currentHref = new URL(ctaBtn.href, window.location.origin);
+          currentHref.searchParams.set('acabado', vName);
+          ctaBtn.href = currentHref.pathname + currentHref.search;
+        }
+      });
+    });
+  })();
+</script>

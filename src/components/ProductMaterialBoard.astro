@@ -1,0 +1,247 @@
+---
+// ProductMaterialBoard.astro
+// Laboratorio de Materias Nobles & Texturas Táctiles de Atelier Pliegue
+// Inspirado en la inspección de materiales de Wiemer.store y la cerámica noble de Acme Cups
+---
+
+<div class="product-material-board" id="productMaterialBoard">
+  <div class="material-grid-interactive">
+    <!-- Material 1: Gres Cerámico Chamotado -->
+    <div class="material-card-tactile active photo-reveal" tabindex="0" data-mat="0">
+      <div class="material-img-wrap">
+        <img 
+          src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=1200&q=80" 
+          alt="Gres cerámico cocido a 1280 °C" 
+          class="material-img" 
+          loading="lazy"
+        />
+        <span class="mat-pill-badge">01 // CERÁMICA VITRIFICADA</span>
+      </div>
+      <div class="material-body-content">
+        <div class="material-header-line">
+          <h3 class="mat-name">Gres Cerámico Chamotado</h3>
+          <span class="density-badge">1,280 °C Cocción</span>
+        </div>
+        <p class="mat-desc">
+          Pasta de arcilla con grano refractario grueso torneada a mano en plato tradicional. Su vitrificación total a alta temperatura garantiza porosidad inferior al 0.5%, haciendo las tazas, cuencos y jarrones impermeables y altamente resistentes al choque térmico.
+        </p>
+        <div class="mat-chips">
+          <span class="spec-chip">✦ Torneado manual pieza a pieza</span>
+          <span class="spec-chip">✦ Esmalte mate sedoso libre de plomo</span>
+          <span class="spec-chip">✦ Apto para lavavajillas y uso diario</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Material 2: Roble Blanco Macizo FSC -->
+    <div class="material-card-tactile photo-reveal" tabindex="0" data-mat="1">
+      <div class="material-img-wrap">
+        <img 
+          src="https://images.unsplash.com/photo-1546484475-7f7bd55792da?auto=format&fit=crop&w=1200&q=80" 
+          alt="Roble blanco macizo corte radial" 
+          class="material-img" 
+          loading="lazy"
+        />
+        <span class="mat-pill-badge">02 // MADERA FSC</span>
+      </div>
+      <div class="material-body-content">
+        <div class="material-header-line">
+          <h3 class="mat-name">Roble Blanco Macizo</h3>
+          <span class="density-badge">740 kg/m³</span>
+        </div>
+        <p class="mat-desc">
+          Madera de corte radial seleccionada por la rectitud de su veta y estabilidad geométrica. Estabilizada en secadero de taller durante 180 días y acabada con cera virgen de abeja y aceites de linaza sin barnices sintéticos que impidan la respiración del poro.
+        </p>
+        <div class="mat-chips">
+          <span class="spec-chip">✦ Ensambles de cola de milano y espiga</span>
+          <span class="spec-chip">✦ Tacto cálido sedoso vegetal</span>
+          <span class="spec-chip">✦ Tala regenerativa certificada FSC</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Material 3: Latón Natural sin Barniz -->
+    <div class="material-card-tactile photo-reveal" tabindex="0" data-mat="2">
+      <div class="material-img-wrap">
+        <img 
+          src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=80" 
+          alt="Latón macizo natural torneado" 
+          class="material-img" 
+          loading="lazy"
+        />
+        <span class="mat-pill-badge">03 // METAL MACIZO</span>
+      </div>
+      <div class="material-body-content">
+        <div class="material-header-line">
+          <h3 class="mat-name">Latón Natural Torneado</h3>
+          <span class="density-badge">8,400 kg/m³</span>
+        </div>
+        <p class="mat-desc">
+          Aleación mineral Cu-Zn mecanizada en barra maciza para rótulas, manillas, vástagos y arandelas. Rechazamos los baños electrolíticos y lacas transparentes: el latón desnudo madura con el contacto de las manos, ganando una pátina dorada y viva.
+        </p>
+        <div class="mat-chips">
+          <span class="spec-chip">✦ Mecanizado en torno de precisión</span>
+          <span class="spec-chip">✦ Pátina orgánica reversible con lana de acero</span>
+          <span class="spec-chip">✦ 100% Reciclable y libre de plomo</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Material 4: Lino Belga en Rama -->
+    <div class="material-card-tactile photo-reveal" tabindex="0" data-mat="3">
+      <div class="material-img-wrap">
+        <img 
+          src="https://images.unsplash.com/photo-1584589167171-541ce45f1eea?auto=format&fit=crop&w=1200&q=80" 
+          alt="Lino puro tejido artesanal" 
+          class="material-img" 
+          loading="lazy"
+        />
+        <span class="mat-pill-badge">04 // FIBRA VEGETAL</span>
+      </div>
+      <div class="material-body-content">
+        <div class="material-header-line">
+          <h3 class="mat-name">Lino Puro en Rama</h3>
+          <span class="density-badge">480 g/m²</span>
+        </div>
+        <p class="mat-desc">
+          Fibra vegetal pesada sin blanqueadores de cloro. Empleada en pantallas difusoras de luz y tapicería tradicional sobre cincha de yute. Su densidad tamiza la luz con un brillo ámbar envolvente a 2,700 Kelvin.
+        </p>
+        <div class="mat-chips">
+          <span class="spec-chip">✦ Filtro fotométrico cálido natural</span>
+          <span class="spec-chip">✦ Resistencia al frote > 40,000 ciclos</span>
+          <span class="spec-chip">✦ Cultivo europeo libre de pesticidas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .product-material-board {
+    margin-top: 2rem;
+  }
+
+  .material-grid-interactive {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .material-grid-interactive {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .material-grid-interactive {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .material-card-tactile {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+    cursor: pointer;
+  }
+
+  .material-card-tactile:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-accent);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+  }
+
+  .material-img-wrap {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background-color: var(--color-bg-secondary);
+  }
+
+  .material-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .material-card-tactile:hover .material-img {
+    transform: scale(1.05);
+  }
+
+  .mat-pill-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-full);
+    background-color: rgba(26, 26, 24, 0.85);
+    color: #FFFFFF;
+    backdrop-filter: blur(4px);
+  }
+
+  .material-body-content {
+    padding: 1.5rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .material-header-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .mat-name {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    color: var(--color-text-primary);
+  }
+
+  .density-badge {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    background-color: var(--color-bg-secondary);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--color-border);
+  }
+
+  .mat-desc {
+    font-size: 0.825rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+  }
+
+  .mat-chips {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  .spec-chip {
+    font-size: 0.725rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+  }
+</style>

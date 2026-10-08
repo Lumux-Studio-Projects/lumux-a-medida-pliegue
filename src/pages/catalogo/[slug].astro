@@ -1,0 +1,366 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import VariantSelector from '../../components/VariantSelector.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map(product => ({
+    params: { slug: product.id },
+    props: { product }
+  }));
+}
+
+const { product } = Astro.props;
+const {
+  name,
+  collection,
+  category,
+  description,
+  materials,
+  dimensions,
+  leadTime,
+  images,
+  variants,
+  enquiry
+} = product.data;
+
+// Obtener productos afines
+const allProducts = await getCollection('products');
+const relatedProducts = allProducts.filter(p => p.id !== product.id && p.data.collection === collection).slice(0, 3);
+---
+
+<BaseLayout title={name} description={description}>
+  <article class="product-detail-sheet">
+    <!-- Migas de pan -->
+    <div class="product-breadcrumb-bar">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Migas de pan">
+          <a href="/">Inicio</a>
+          <span>/</span>
+          <a href="/catalogo">Catálogo</a>
+          <span>/</span>
+          <span class="current">{name}</span>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Layout Principal: Galería + Ficha Técnica Interactiva -->
+    <div class="container product-main-grid">
+      <!-- Columna de Galería Visual de Producto -->
+      <div class="product-gallery-col">
+        <div class="main-image-viewport">
+          <img 
+            src={images[0].src} 
+            alt={images[0].alt} 
+            id="mainProductImage" 
+            class="main-prod-img" 
+          />
+        </div>
+
+        {images.length > 1 && (
+          <div class="gallery-thumbnails-row">
+            {images.map((img, idx) => (
+              <button 
+                type="button" 
+                class:list={['thumb-btn', { active: idx === 0 }]}
+                data-src={img.src}
+                aria-label={`Ver ángulo ${idx + 1}`}
+              >
+                <img src={img.src} alt={img.alt} class="thumb-img" />
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <!-- Columna de Información Editorial y Selector de Variantes -->
+      <div class="product-spec-col">
+        <div class="spec-header">
+          <span class="tag-meta">{category} · Ref. {enquiry.reference}</span>
+          <h1 class="product-h1">{name}</h1>
+          <p class="product-desc-p">{description}</p>
+        </div>
+
+        <!-- Selector de Variantes de Acabado (Componente Reactivo) -->
+        <VariantSelector 
+          variants={variants} 
+          productName={name}
+          reference={enquiry.reference}
+        />
+
+        <!-- Especificaciones Técnicas -->
+        <div class="specs-accordion">
+          <h3 class="specs-heading">Especificaciones Técnicas</h3>
+          
+          <dl class="specs-list">
+            <div class="spec-row">
+              <dt>Dimensiones:</dt>
+              <dd>{dimensions}</dd>
+            </div>
+            <div class="spec-row">
+              <dt>Materiales:</dt>
+              <dd>{materials.join(', ')}</dd>
+            </div>
+            <div class="spec-row">
+              <dt>Plazo de Fabricación:</dt>
+              <dd>{leadTime}</dd>
+            </div>
+            <div class="spec-row">
+              <dt>Origen:</dt>
+              <dd>Taller de ebanistería y torno, Guadalajara, MX</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="craft-note">
+          <span class="note-icon" aria-hidden="true">✦</span>
+          <p>
+            Cada pieza se elabora por encargo y presenta vetas o texturas únicas derivadas del carácter natural del material.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Piezas Afines de la Colección -->
+    {relatedProducts.length > 0 && (
+      <section class="related-collection-section">
+        <div class="container">
+          <div class="sec-header">
+            <div>
+              <span class="tag-meta">Diálogo Material</span>
+              <h2 class="sec-title">Otras Piezas de la Colección</h2>
+            </div>
+            <a href="/catalogo" class="link-editorial">Ver Catálogo Completo →</a>
+          </div>
+
+          <div class="related-products-grid">
+            {relatedProducts.map(p => (
+              <ProductCard 
+                name={p.data.name}
+                category={p.data.category}
+                collection={p.data.collection}
+                image={p.data.images[0].src}
+                dimensions={p.data.dimensions}
+                slug={p.id}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+  </article>
+</BaseLayout>
+
+<style>
+  .product-breadcrumb-bar {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  .breadcrumb {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-accent);
+  }
+
+  .breadcrumb .current {
+    color: var(--color-text-primary);
+  }
+
+  /* Main Grid */
+  .product-main-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    padding-top: 3rem;
+    padding-bottom: 6rem;
+  }
+
+  @media (min-width: 900px) {
+    .product-main-grid {
+      grid-template-columns: 1.25fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+  }
+
+  /* Galería */
+  .product-gallery-col {
+    position: sticky;
+    top: 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .main-image-viewport {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: var(--radius-xs);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+  }
+
+  .main-prod-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.25s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gallery-thumbnails-row {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .thumb-btn {
+    width: 72px;
+    height: 72px;
+    border-radius: var(--radius-xs);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    background: transparent;
+    padding: 0;
+    transition: border-color var(--transition-fast);
+  }
+
+  .thumb-btn:hover,
+  .thumb-btn.active {
+    border-color: var(--color-accent);
+  }
+
+  .thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Especificaciones */
+  .spec-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .product-h1 {
+    font-size: clamp(2.25rem, 3.8vw, 3.25rem);
+    margin: 0.25rem 0 0.5rem;
+  }
+
+  .product-desc-p {
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+  }
+
+  .specs-accordion {
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .specs-heading {
+    font-size: 1.15rem;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+  }
+
+  .specs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid var(--color-border-light);
+    padding-bottom: 0.5rem;
+  }
+
+  .spec-row dt {
+    color: var(--color-text-muted);
+  }
+
+  .spec-row dd {
+    color: var(--color-text-primary);
+    font-weight: 500;
+    text-align: right;
+  }
+
+  .craft-note {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem;
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-xs);
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin-top: 1.5rem;
+  }
+
+  .note-icon {
+    color: var(--color-accent);
+  }
+
+  /* Relacionados */
+  .related-collection-section {
+    padding: clamp(4rem, 8vw, 7.5rem) 0;
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+  }
+
+  .sec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+  }
+
+  .related-products-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem 2rem;
+  }
+
+  @media (min-width: 640px) {
+    .related-products-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const mainImg = document.getElementById('mainProductImage');
+    const thumbBtns = document.querySelectorAll('.thumb-btn');
+
+    thumbBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        thumbBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const newSrc = btn.getAttribute('data-src');
+        if (mainImg && newSrc) {
+          mainImg.style.opacity = '0.3';
+          setTimeout(() => {
+            mainImg.src = newSrc;
+            mainImg.style.opacity = '1';
+          }, 150);
+        }
+      });
+    });
+  })();
+</script>

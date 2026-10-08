@@ -1,0 +1,259 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import siteData from '../data/site.json';
+
+const atelierSteps = [
+  {
+    step: "01",
+    title: "Selección del Tablón & Bloque",
+    desc: "Acudimos personalmente a aserraderos certificados en Michoacán y Jalisco para elegir tablones con secado al aire superior a 18 meses."
+  },
+  {
+    step: "02",
+    title: "Corte y Despiece en Taller",
+    desc: "Trabajamos con maquinaria de carpintería tradicional: cepillado manual, ensamble de cola de milano y torneado a baja velocidad."
+  },
+  {
+    step: "03",
+    title: "Acabado al Aceite & Cera Natural",
+    desc: "Renunciamos a barnices sintéticos poliuretánicos. Aplicamos tres manos de aceites vegetales que nutren la fibra y permiten respirar a la madera."
+  },
+  {
+    step: "04",
+    title: "Control de Calidad & Numeración",
+    desc: "Cada pieza se marca con el sello de fuego de Atelier Pliegue y se entrega con su certificado de lote y recomendaciones de cuidado."
+  }
+];
+---
+
+<BaseLayout 
+  title="Marca & Taller" 
+  description="Historia de manufactura, origen de los materiales y filosofía artesanal de Atelier Pliegue."
+>
+  <div class="page-header">
+    <div class="container">
+      <span class="tag-meta">Filosofía del Taller</span>
+      <h1 class="header-h1">EL ARTE DE LA MATERIA HONESTA</h1>
+      <p class="header-lead">
+        Fundado en {siteData.brand.founded} en Guadalajara, Pliegue nació de una convicción simple: los objetos que nos rodean deben envejecer con gracia, no deteriorarse.
+      </p>
+    </div>
+  </div>
+
+  <!-- Manifiesto de Producción -->
+  <section class="brand-story-section">
+    <div class="container story-grid">
+      <div class="story-left">
+        <span class="tag-meta">El Origen</span>
+        <h2 class="story-h2">UN ANTÍDOTO CONTRA LO DESECHABLE</h2>
+      </div>
+
+      <div class="story-right">
+        <p class="p-strong">
+          En un mercado saturado de muebles en kit prensados y acabados sintéticos que simulan madera, en Pliegue trabajamos exclusivamente con masas sólidas: roble, tzalam, latón crudo y pastas cerámicas cocidas a más de 1200 grados.
+        </p>
+        <p class="p-regular">
+          Diseñamos para que una mesa o una lámpara adquiera una pátina hermosa tras 20 años de uso diario. Los pequeños golpes, la exposición a la luz solar y el contacto de las manos no degradan la pieza; la convierten en un objeto con memoria propia.
+        </p>
+
+        <div class="workshop-photo-frame">
+          <img 
+            src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80" 
+            alt="Herramientas tradicionales en el banco de trabajo del taller" 
+            class="workshop-img"
+          />
+          <span class="tag-meta photo-meta">Banco de trabajo y ensambles de madera en nuestro taller de la Col. Americana.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proceso de Fabricación -->
+  <section class="steps-section" id="proceso">
+    <div class="container">
+      <div class="steps-header">
+        <span class="tag-meta">De la Materia Prima al Objeto</span>
+        <h2 class="steps-h2">CUATRO ETAPAS DE MANUFACTURA</h2>
+      </div>
+
+      <div class="steps-grid">
+        {atelierSteps.map(s => (
+          <div class="step-card">
+            <span class="step-idx">{s.step}</span>
+            <h3 class="step-name">{s.title}</h3>
+            <p class="step-txt">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Showroom Visit -->
+  <section class="visit-banner-section">
+    <div class="container-narrow text-center">
+      <span class="tag-meta">Experiencia Táctil</span>
+      <h2 class="visit-h2">VISITA NUESTRO ESPACIO EN GUADALAJARA</h2>
+      <p class="visit-p">
+        Te invitamos a tocar los materiales, probar la altura de los asientos y sentir la calidez de nuestras luminarias en persona.
+      </p>
+      <a href="/contacto" class="btn btn-primary">Agendar Cita en el Showroom →</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: clamp(3.5rem, 6vw, 6rem) 0 3.5rem;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+  }
+
+  .header-h1 {
+    margin: 0.75rem 0 1rem;
+  }
+
+  .header-lead {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--color-text-secondary);
+    max-width: 650px;
+    line-height: 1.6;
+  }
+
+  .brand-story-section {
+    padding: clamp(4rem, 8vw, 8rem) 0;
+  }
+
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .story-grid {
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+    }
+  }
+
+  .story-h2 {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    margin-top: 0.5rem;
+    color: var(--color-text-primary);
+  }
+
+  .p-strong {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    color: var(--color-text-primary);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+
+  .p-regular {
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+
+  .workshop-photo-frame {
+    margin-top: 2rem;
+  }
+
+  .workshop-img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--color-border);
+  }
+
+  .photo-meta {
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  /* Steps */
+  .steps-section {
+    padding: clamp(4rem, 8vw, 7.5rem) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+  }
+
+  .steps-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .steps-h2 {
+    margin-top: 0.5rem;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .steps-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .steps-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .step-card {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xs);
+    padding: 2rem 1.75rem;
+  }
+
+  .step-idx {
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+    color: var(--color-accent);
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .step-name {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-txt {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+  }
+
+  /* Visit */
+  .visit-banner-section {
+    padding: 6rem 0;
+    text-align: center;
+  }
+
+  .text-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .visit-h2 {
+    margin: 1rem 0 1.25rem;
+  }
+
+  .visit-p {
+    font-size: 1.15rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 2.25rem;
+    max-width: 580px;
+  }
+</style>

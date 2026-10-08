@@ -1,0 +1,58 @@
+{
+  "name": "Taza & Platillo Tectónico",
+  "collection": "coleccion-tierra",
+  "category": "Objetos & Cerámica",
+  "description": "Juego de taza de café de 220 ml y platillo torneado a mano en gres chamotado a 1,280 °C. Diseñada ergonómicamente con labio redondeado suave al contacto, espesor calibrado para retención térmica y base con anillo esmaltado. Esmaltes minerales táctiles inspirados en el ritual del café de especialidad.",
+  "materials": [
+    "Gres cerámico vitrificado de alta temperatura 1,280 °C",
+    "Esmaltes minerales botánicos sin plomo",
+    "Apto para lavavajillas y uso alimentario rudo"
+  ],
+  "dimensions": "Taza Ø 8.5 cm × H 6.8 cm (220 ml) · Platillo Ø 14.5 cm · Set 460 g",
+  "leadTime": "En stock (Lote numerado 2026)",
+  "images": [
+    {
+      "src": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Taza de cerámica artesanal sobre mesa de roble con café de especialidad"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Platillo y taza con textura mineral gres"
+    }
+  ],
+  "variants": [
+    {
+      "id": "taza-feijoa",
+      "name": "Feijoa Verde Mineral",
+      "finish": "Esmalte satinado tacto sedoso",
+      "image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1200&q=80",
+      "colorHex": "#4A6B53"
+    },
+    {
+      "id": "taza-terracota",
+      "name": "Ocre Terracota",
+      "finish": "Pasta chamotada y brillo mate",
+      "image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1200&q=80",
+      "colorHex": "#A85A3C"
+    },
+    {
+      "id": "taza-crema",
+      "name": "Crema Cruda",
+      "finish": "Esmalte cuarzo blanco tiza",
+      "image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1200&q=80",
+      "colorHex": "#E8E0D2"
+    },
+    {
+      "id": "taza-carbon",
+      "name": "Ceniza de Carbón",
+      "finish": "Negro mineral profundo",
+      "image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1200&q=80",
+      "colorHex": "#2C2D30"
+    }
+  ],
+  "enquiry": {
+    "label": "Solicitar set de tazas (Particular o Cafetería)",
+    "reference": "DEMO-PLIEGUE-07"
+  },
+  "featured": true
+}

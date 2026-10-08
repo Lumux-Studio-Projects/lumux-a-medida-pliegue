@@ -1,0 +1,60 @@
+{
+  "name": "Atelier Pliegue",
+  "defaultTheme": "yeso-salvia",
+  "themes": [
+    {
+      "id": "yeso-salvia",
+      "name": "Yeso & Salvia Mineral",
+      "subtitle": "Cálido, vegetal y lino luminoso diurno",
+      "colors": {
+        "bgPrimary": "#F6F4EE",
+        "bgSecondary": "#EBE7DC",
+        "bgCard": "#FFFFFF",
+        "textPrimary": "#201E1A",
+        "textSecondary": "#645E54",
+        "textMuted": "#8A8478",
+        "accent": "#4D5B46",
+        "accentHover": "#3B4635",
+        "border": "#DDD7CB",
+        "borderLight": "#E8E3D7",
+        "surfaceMuted": "#E2DCce"
+      }
+    },
+    {
+      "id": "terracota-cobre",
+      "name": "Barro Rojo & Cobre Pulido",
+      "subtitle": "Mineral tostado, cerámico y cálido de taller",
+      "colors": {
+        "bgPrimary": "#F6EEE5",
+        "bgSecondary": "#EBDDCF",
+        "bgCard": "#FFFFFF",
+        "textPrimary": "#2A1C16",
+        "textSecondary": "#6E5B53",
+        "textMuted": "#96837A",
+        "accent": "#A34C2B",
+        "accentHover": "#873C1E",
+        "border": "#DDC9BA",
+        "borderLight": "#EADBD0",
+        "surfaceMuted": "#E2D0C2"
+      }
+    },
+    {
+      "id": "ebano-champagne",
+      "name": "Ébano Noir & Oro Champagne",
+      "subtitle": "Nocturno de alta orfebrería y galería de lujo",
+      "colors": {
+        "bgPrimary": "#131211",
+        "bgSecondary": "#1C1B19",
+        "bgCard": "#23211E",
+        "textPrimary": "#FAF8F5",
+        "textSecondary": "#A8A59E",
+        "textMuted": "#737069",
+        "accent": "#D8B26E",
+        "accentHover": "#ECCB8A",
+        "border": "#2E2C28",
+        "borderLight": "#3D3A35",
+        "surfaceMuted": "#1A1917"
+      }
+    }
+  ]
+}

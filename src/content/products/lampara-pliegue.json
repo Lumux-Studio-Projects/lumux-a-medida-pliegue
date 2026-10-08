@@ -1,0 +1,47 @@
+{
+  "name": "Lámpara Pliegue",
+  "collection": "coleccion-luz",
+  "category": "Iluminación",
+  "description": "Lámpara de sobremesa esculpida a partir de una única lámina de aluminio aeronáutico curvada a mano. Su pantalla articulada dirige el haz de luz sin deslumbramientos directos.",
+  "materials": ["Aluminio cepillado", "Textil de lino crudo", "LED regulable 2700K"],
+  "dimensions": "42 × 28 × 18 cm · Peso 2.4 kg",
+  "leadTime": "3 a 4 semanas bajo encargo",
+  "images": [
+    {
+      "src": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Lámpara Pliegue sobre superficie clara de madera"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Detalle de la curva del difusor y cable trenzado"
+    }
+  ],
+  "variants": [
+    {
+      "id": "aluminio-natural",
+      "name": "Aluminio Cepillado",
+      "finish": "Acabado anodizado mate natural",
+      "image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1200&q=80",
+      "colorHex": "#D0D2D3"
+    },
+    {
+      "id": "oliva-anodizado",
+      "name": "Oliva Mate",
+      "finish": "Pátina verde oliva electroestática",
+      "image": "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=1200&q=80",
+      "colorHex": "#5E6351"
+    },
+    {
+      "id": "negro-carbon",
+      "name": "Carbón Texturizado",
+      "finish": "Pintura al polvo microporosa negra",
+      "image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1200&q=80",
+      "colorHex": "#22201D"
+    }
+  ],
+  "enquiry": {
+    "label": "Consultar esta pieza",
+    "reference": "DEMO-PLIEGUE-01"
+  },
+  "featured": true
+}
